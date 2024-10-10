@@ -13,8 +13,8 @@ class RememberModel {
     var id: UUID
     var rememberName: String
     var rememberDescription: String
-    @Relationship(inverse: \RemeberDateModel.rememberThis) var rememberDates: [RemeberDateModel]
-    init(id: UUID, rememberName: String, rememberDescription: String, rememberDates: [RemeberDateModel]) {
+    @Relationship(inverse: \RemeberDateModel.rememberThis) var rememberDates: [RememberDateModel]
+    init(id: UUID, rememberName: String, rememberDescription: String, rememberDates: [RememberDateModel]) {
         self.id = id
         self.rememberName = rememberName
         self.rememberDescription = rememberDescription
@@ -22,7 +22,7 @@ class RememberModel {
     }
 }
 @Model
-class RemeberDateModel {
+class RememberDateModel {
     var id: UUID
     @Relationship var rememberThis: RememberModel?
     init(id: UUID, rememberThis: RememberModel? = nil) {
