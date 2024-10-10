@@ -10,11 +10,14 @@ import SwiftUI
 struct AddView: View {
     @Environment(\.dismiss) var dismiss
     @State var selectDateIndex: Int?
-    var vm = AddViewModel()
+    @State var vm = AddViewModel()
     var body: some View {
         @Bindable var bindingVm = vm
         VStack {
             TextField("암기명", text: $bindingVm.rememberThisName)
+                .padding(.leading, 24)
+            TextEditor(text: $bindingVm.rememberThisDescription)
+                .frame(height: 100)
                 .padding(.leading, 24)
             List {
                 Button("일정 추가") {
@@ -30,7 +33,10 @@ struct AddView: View {
         }
         .toolbar {
             Button("Ok") {
-                self.dismiss()
+                Task {
+                    self.vm.createRemember()
+                    self.dismiss()
+                }
             }
         }
         .sheet(isPresented: .constant(self.selectDateIndex != nil)) {
