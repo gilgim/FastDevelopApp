@@ -12,7 +12,7 @@ import SwiftData
 struct RememberThisApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ListView()
         }
         .modelContainer(RememberThisConfiguration.container)
     }
@@ -51,10 +51,12 @@ class RememberThisConfiguration {
             fatalError()
         }
     }()
-    @MainActor static var context: ModelContext {
+    @MainActor
+    static var context: ModelContext {
         return RememberThisConfiguration.container.mainContext
     }
-    @MainActor static func loadData<T: PersistentModel>(_: T.Type) -> [T]? {
+    @MainActor
+    static func loadData<T: PersistentModel>(_: T.Type) -> [T]? {
         let fetchDescript = FetchDescriptor<T>()
         return try? RememberThisConfiguration.context.fetch(fetchDescript)
     }

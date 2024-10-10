@@ -9,6 +9,7 @@ import Foundation
 @Observable
 class AddViewModel {
     var rememberThisName: String = ""
+    var rememberThisDescription: String = ""
     var rememberRepeatDates: [Date] = []
     func dateFormatterString(date: Date) -> String {
         var formatter = DateFormatter()
@@ -26,10 +27,16 @@ class AddViewModel {
             rememberRepeatDates.append(Date())
         }
     }
-    @MainActor func saveRememberThis() {
-        for rememberRepeatDate in rememberRepeatDates {
-            
+    @MainActor
+    func createRemember() {
+        var rememberDate: [RememberDateModel] = []
+        for date in rememberRepeatDates {
+            let rememberDateModel = RememberDateModel(id: .init(), date: date)
+            rememberDate.append(rememberDateModel)
         }
+        let rememberThis = RememberModel(id: .init(), rememberName: rememberThisName, rememberDescription: rememberThisDescription)
+        rememberThis.rememberDates?.append(contentsOf: rememberDate)
+        RememberThisConfiguration.context.insert(rememberThis)
         try? RememberThisConfiguration.context.save()
     }
 }
