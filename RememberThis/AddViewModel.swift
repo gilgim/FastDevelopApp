@@ -26,4 +26,10 @@ class AddViewModel {
             rememberRepeatDates.append(Date())
         }
     }
+    @MainActor func saveRememberThis() {
+        for rememberRepeatDate in rememberRepeatDates {
+            
+        }
+        try? RememberThisConfiguration.context.save()
+    }
 }
