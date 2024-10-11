@@ -7,10 +7,10 @@
 
 import SwiftUI
 
-struct AddView: View {
+struct RememberThisAddView: View {
     @Environment(\.dismiss) var dismiss
     @State var selectDateIndex: Int?
-    @State var vm = AddViewModel()
+    @State var vm = RememberThisAddViewModel()
     var body: some View {
         @Bindable var bindingVm = vm
         VStack {
@@ -61,5 +61,5 @@ struct AddView: View {
 }
 
 #Preview {
-    AddView()
+    RememberThisAddView()
 }

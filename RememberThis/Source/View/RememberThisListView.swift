@@ -7,9 +7,9 @@
 
 import SwiftUI
 import SwiftData
-struct ListView: View {
+struct RememberThisListView: View {
     @Query(sort: \RememberModel.id) var rememberThises: [RememberModel]
-    var vm = ListViewModel()
+    var vm = RememberThisListViewModel()
     @State var selected: RememberModel?
     @State var isDeletePresented: Bool = false
     var body: some View {
@@ -40,7 +40,7 @@ struct ListView: View {
             })
             .toolbar {
                 NavigationLink {
-                    AddView()
+                    RememberThisAddView()
                 } label: {
                     Image(systemName: "plus")
                 }
@@ -50,5 +50,5 @@ struct ListView: View {
 }
 
 #Preview {
-    ListView()
+    RememberThisListView()
 }

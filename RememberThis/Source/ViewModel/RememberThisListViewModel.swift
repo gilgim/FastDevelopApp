@@ -1,5 +1,5 @@
 //
-//  ListViewModel.swift
+//  RememberThisListViewModel.swift
 //  RememberThis
 //
 //  Created by gaea on 10/10/24.
@@ -9,7 +9,7 @@ import EventKit
 import UserNotifications
 
 @Observable
-class ListViewModel {
+class RememberThisListViewModel {
     var remembers: [RememberModel] = []
     
     @MainActor
@@ -54,10 +54,10 @@ class ListViewModel {
                     print("해당 ID로 미리알림을 찾을 수 없습니다.")
                 }
             }
-            RememberThisConfiguration.context.delete(rememberDate)
+            RememberThisSwiftDataConfiguration.context.delete(rememberDate)
         }
-        RememberThisConfiguration.context.delete(rememberThis)  // 데이터 삭제
-        try? RememberThisConfiguration.context.save()  // 변경 사항 저장
+        RememberThisSwiftDataConfiguration.context.delete(rememberThis)  // 데이터 삭제
+        try? RememberThisSwiftDataConfiguration.context.save()  // 변경 사항 저장
         
     }
 }

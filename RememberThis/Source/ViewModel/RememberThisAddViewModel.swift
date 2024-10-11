@@ -1,5 +1,5 @@
 //
-//  AddViewModel.swift
+//  RememberThisAddViewModel.swift
 //  RememberThis
 //
 //  Created by gaea on 10/10/24.
@@ -9,20 +9,23 @@ import EventKit
 import UserNotifications
 
 @Observable
-class AddViewModel {
+class RememberThisAddViewModel {
     var rememberThisName: String = ""
     var rememberThisDescription: String = ""
     var rememberRepeatDates: [Date] = []
     var isAddAccessCalendar: Bool = false
     var isAddAccessReminder: Bool = false
+    
     func dateFormatterString(date: Date) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy년 MM월 dd일 HH:mm"
         return formatter.string(from: date)
     }
+    
     func sortDate() {
         rememberRepeatDates.sort()
     }
+    
     func addDate() {
         if let lastDate = rememberRepeatDates.last {
             let nextDate = Calendar.current.date(byAdding: .day, value: 1, to: lastDate)!
@@ -31,6 +34,7 @@ class AddViewModel {
             rememberRepeatDates.append(Date())
         }
     }
+    
     @MainActor
     func createRemember() async {
         //  스위프트 데이터에 추가
@@ -38,25 +42,7 @@ class AddViewModel {
         for date in rememberRepeatDates {
             let rememberDateID = UUID()
             let rememberDateModel = RememberDateModel(id: rememberDateID, date: date)
-            
-            // 알림 설정
-            let content = UNMutableNotificationContent()
-            content.title = "기억하세요!"
-            content.body = "오늘 등록한 중요한 내용을 확인하세요."
-            content.sound = .default
-            
-            // 날짜 기반 트리거 설정
-            var dateComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: date)
-            let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
-            
-            let request = UNNotificationRequest(identifier: "\(rememberDateID)", content: content, trigger: trigger)
-            
-            // 알림 추가
-            UNUserNotificationCenter.current().add(request) { error in
-                if let error = error {
-                    print("알림 등록 오류: \(error.localizedDescription)")
-                }
-            }
+            self.addNotification(id: rememberDateID, date: date)
             if isAddAccessCalendar {
                 if let event = try? await addCalendar(date: date) {
                     rememberDateModel.calendarID = event.calendarItemIdentifier
@@ -68,12 +54,30 @@ class AddViewModel {
                 }
             }
             rememberDate.append(rememberDateModel)
-            RememberThisConfiguration.context.insert(rememberDateModel)
+            RememberThisSwiftDataConfiguration.context.insert(rememberDateModel)
         }
         let rememberThis = RememberModel(id: .init(), rememberName: rememberThisName, rememberDescription: rememberThisDescription)
         rememberThis.rememberDates = rememberDate
-        RememberThisConfiguration.context.insert(rememberThis)
-        try? RememberThisConfiguration.context.save()
+        RememberThisSwiftDataConfiguration.context.insert(rememberThis)
+        try? RememberThisSwiftDataConfiguration.context.save()
+    }
+    func addNotification(id: UUID, date: Date) {
+        let content = UNMutableNotificationContent()
+        content.title = "기억하세요!"
+        content.body = "오늘 등록한 중요한 내용을 확인하세요."
+        content.sound = .default
+        
+        // 날짜 기반 트리거 설정
+        var dateComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: date)
+        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
+        let request = UNNotificationRequest(identifier: "\(id)", content: content, trigger: trigger)
+        
+        // 알림 추가
+        UNUserNotificationCenter.current().add(request) { error in
+            if let error = error {
+                print("알림 등록 오류: \(error.localizedDescription)")
+            }
+        }
     }
     func addCalendar(date: Date) async throws -> EKEvent? {
         return try await withCheckedThrowingContinuation { continuation in

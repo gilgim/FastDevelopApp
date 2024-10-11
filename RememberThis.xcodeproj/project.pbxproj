@@ -8,15 +8,16 @@
 
 /* Begin PBXBuildFile section */
 		1695AD862CB8F74E00D9B6F9 /* RememberModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1695AD742CB8F74E00D9B6F9 /* RememberModel.swift */; };
-		1695AD872CB8F74E00D9B6F9 /* AddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1695AD7A2CB8F74E00D9B6F9 /* AddView.swift */; };
-		1695AD882CB8F74E00D9B6F9 /* ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1695AD7B2CB8F74E00D9B6F9 /* ListView.swift */; };
+		1695AD872CB8F74E00D9B6F9 /* RememberThisAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1695AD7A2CB8F74E00D9B6F9 /* RememberThisAddView.swift */; };
+		1695AD882CB8F74E00D9B6F9 /* RememberThisListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1695AD7B2CB8F74E00D9B6F9 /* RememberThisListView.swift */; };
 		1695AD892CB8F74E00D9B6F9 /* RememberThisSplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1695AD7C2CB8F74E00D9B6F9 /* RememberThisSplashView.swift */; };
-		1695AD8A2CB8F74E00D9B6F9 /* AddViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1695AD7E2CB8F74E00D9B6F9 /* AddViewModel.swift */; };
-		1695AD8B2CB8F74E00D9B6F9 /* ListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1695AD7F2CB8F74E00D9B6F9 /* ListViewModel.swift */; };
+		1695AD8A2CB8F74E00D9B6F9 /* RememberThisAddViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1695AD7E2CB8F74E00D9B6F9 /* RememberThisAddViewModel.swift */; };
+		1695AD8B2CB8F74E00D9B6F9 /* RememberThisListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1695AD7F2CB8F74E00D9B6F9 /* RememberThisListViewModel.swift */; };
 		1695AD8C2CB8F74E00D9B6F9 /* RememberThisSplashViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1695AD802CB8F74E00D9B6F9 /* RememberThisSplashViewModel.swift */; };
 		1695AD8D2CB8F74E00D9B6F9 /* RememberThisApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1695AD842CB8F74E00D9B6F9 /* RememberThisApp.swift */; };
 		1695AD8E2CB8F74E00D9B6F9 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1695AD762CB8F74E00D9B6F9 /* Preview Assets.xcassets */; };
 		1695AD8F2CB8F74E00D9B6F9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1695AD782CB8F74E00D9B6F9 /* Assets.xcassets */; };
+		1695AD932CB8F8A800D9B6F9 /* RememberThisSwiftDataConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1695AD922CB8F89C00D9B6F9 /* RememberThisSwiftDataConfiguration.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,14 +25,15 @@
 		1695AD742CB8F74E00D9B6F9 /* RememberModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RememberModel.swift; sourceTree = "<group>"; };
 		1695AD762CB8F74E00D9B6F9 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		1695AD782CB8F74E00D9B6F9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		1695AD7A2CB8F74E00D9B6F9 /* AddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddView.swift; sourceTree = "<group>"; };
-		1695AD7B2CB8F74E00D9B6F9 /* ListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListView.swift; sourceTree = "<group>"; };
+		1695AD7A2CB8F74E00D9B6F9 /* RememberThisAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RememberThisAddView.swift; sourceTree = "<group>"; };
+		1695AD7B2CB8F74E00D9B6F9 /* RememberThisListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RememberThisListView.swift; sourceTree = "<group>"; };
 		1695AD7C2CB8F74E00D9B6F9 /* RememberThisSplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RememberThisSplashView.swift; sourceTree = "<group>"; };
-		1695AD7E2CB8F74E00D9B6F9 /* AddViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddViewModel.swift; sourceTree = "<group>"; };
-		1695AD7F2CB8F74E00D9B6F9 /* ListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewModel.swift; sourceTree = "<group>"; };
+		1695AD7E2CB8F74E00D9B6F9 /* RememberThisAddViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RememberThisAddViewModel.swift; sourceTree = "<group>"; };
+		1695AD7F2CB8F74E00D9B6F9 /* RememberThisListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RememberThisListViewModel.swift; sourceTree = "<group>"; };
 		1695AD802CB8F74E00D9B6F9 /* RememberThisSplashViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RememberThisSplashViewModel.swift; sourceTree = "<group>"; };
 		1695AD822CB8F74E00D9B6F9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1695AD842CB8F74E00D9B6F9 /* RememberThisApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RememberThisApp.swift; sourceTree = "<group>"; };
+		1695AD922CB8F89C00D9B6F9 /* RememberThisSwiftDataConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RememberThisSwiftDataConfiguration.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,9 +91,9 @@
 		1695AD7D2CB8F74E00D9B6F9 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				1695AD7A2CB8F74E00D9B6F9 /* AddView.swift */,
-				1695AD7B2CB8F74E00D9B6F9 /* ListView.swift */,
 				1695AD7C2CB8F74E00D9B6F9 /* RememberThisSplashView.swift */,
+				1695AD7B2CB8F74E00D9B6F9 /* RememberThisListView.swift */,
+				1695AD7A2CB8F74E00D9B6F9 /* RememberThisAddView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -99,9 +101,9 @@
 		1695AD812CB8F74E00D9B6F9 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				1695AD7E2CB8F74E00D9B6F9 /* AddViewModel.swift */,
-				1695AD7F2CB8F74E00D9B6F9 /* ListViewModel.swift */,
 				1695AD802CB8F74E00D9B6F9 /* RememberThisSplashViewModel.swift */,
+				1695AD7F2CB8F74E00D9B6F9 /* RememberThisListViewModel.swift */,
+				1695AD7E2CB8F74E00D9B6F9 /* RememberThisAddViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -110,7 +112,9 @@
 			isa = PBXGroup;
 			children = (
 				1695AD822CB8F74E00D9B6F9 /* Info.plist */,
+				1695AD912CB8F88C00D9B6F9 /* Configuration */,
 				1695AD792CB8F74E00D9B6F9 /* Resource */,
+				1695AD942CB8F9F900D9B6F9 /* Extensions */,
 				1695AD7D2CB8F74E00D9B6F9 /* View */,
 				1695AD812CB8F74E00D9B6F9 /* ViewModel */,
 				1695AD752CB8F74E00D9B6F9 /* Model */,
@@ -125,6 +129,21 @@
 				1695AD832CB8F74E00D9B6F9 /* Source */,
 			);
 			path = RememberThis;
+			sourceTree = "<group>";
+		};
+		1695AD912CB8F88C00D9B6F9 /* Configuration */ = {
+			isa = PBXGroup;
+			children = (
+				1695AD922CB8F89C00D9B6F9 /* RememberThisSwiftDataConfiguration.swift */,
+			);
+			path = Configuration;
+			sourceTree = "<group>";
+		};
+		1695AD942CB8F9F900D9B6F9 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -201,12 +220,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				1695AD862CB8F74E00D9B6F9 /* RememberModel.swift in Sources */,
-				1695AD872CB8F74E00D9B6F9 /* AddView.swift in Sources */,
-				1695AD882CB8F74E00D9B6F9 /* ListView.swift in Sources */,
+				1695AD872CB8F74E00D9B6F9 /* RememberThisAddView.swift in Sources */,
+				1695AD882CB8F74E00D9B6F9 /* RememberThisListView.swift in Sources */,
 				1695AD892CB8F74E00D9B6F9 /* RememberThisSplashView.swift in Sources */,
-				1695AD8A2CB8F74E00D9B6F9 /* AddViewModel.swift in Sources */,
-				1695AD8B2CB8F74E00D9B6F9 /* ListViewModel.swift in Sources */,
+				1695AD8A2CB8F74E00D9B6F9 /* RememberThisAddViewModel.swift in Sources */,
+				1695AD8B2CB8F74E00D9B6F9 /* RememberThisListViewModel.swift in Sources */,
 				1695AD8C2CB8F74E00D9B6F9 /* RememberThisSplashViewModel.swift in Sources */,
+				1695AD932CB8F8A800D9B6F9 /* RememberThisSwiftDataConfiguration.swift in Sources */,
 				1695AD8D2CB8F74E00D9B6F9 /* RememberThisApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
