@@ -7,6 +7,8 @@
 
 import SwiftUI
 import SwiftData
+import ACarousel
+
 struct RememberThisListView: View {
     @Query(sort: \RememberModel.id) var rememberThises: [RememberModel]
     var vm = RememberThisListViewModel()
@@ -14,19 +16,36 @@ struct RememberThisListView: View {
     @State var isDeletePresented: Bool = false
     var body: some View {
         NavigationStack {
-            List {
-                ForEach(rememberThises, id:\.id) { rememberThis in
-                    Text(rememberThis.rememberName + "암기수 \(rememberThis.rememberDates?.count ?? 0)")
-                        .swipeActions {
-                            Button {
-                                selected = rememberThis
-                                isDeletePresented.toggle()
-                            } label: {
-                                Label("Delete", systemImage: "trash")
-                                    .tint(.red)
-                            }
-                        }
+            VStack {
+//                if rememberThises.count > 0 {
+//                    ACarousel(rememberThises,
+//                              id: \.id,
+//                              spacing: 20,
+//                              autoScroll: .inactive) { rememberThis in
+//                        ZStack {
+//                            Spacer()
+//                            Text("\(rememberThis.rememberName)")
+//                        }
+//                        .background(Color.brown)
+//                        .frame(height: 500)
+//                    }
+//                              .background(Color.brown)
+//                } else {
+//                    Text("Empty View")
+//                }
+                ACarousel(["Text", "Text"],
+                          id: \.self,
+                          spacing: 20,
+                          isWrap: true,
+                          autoScroll: .inactive) { rememberThis in
+                    ZStack {
+                        Spacer()
+                        Text("\(rememberThis)")
+                    }
+                    .frame(width: 300, height: 500)
+                    .background(Color.red)
                 }
+                .background(Color.brown)
             }
             .alert("삭제", isPresented: $isDeletePresented, actions: {
                 Button("취소", role: .cancel) {

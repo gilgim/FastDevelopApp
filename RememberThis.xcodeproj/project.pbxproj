@@ -18,6 +18,8 @@
 		1695AD8E2CB8F74E00D9B6F9 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1695AD762CB8F74E00D9B6F9 /* Preview Assets.xcassets */; };
 		1695AD8F2CB8F74E00D9B6F9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1695AD782CB8F74E00D9B6F9 /* Assets.xcassets */; };
 		1695AD932CB8F8A800D9B6F9 /* RememberThisSwiftDataConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1695AD922CB8F89C00D9B6F9 /* RememberThisSwiftDataConfiguration.swift */; };
+		1695AD962CB8FEDA00D9B6F9 /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1695AD952CB8FEC600D9B6F9 /* ColorExtension.swift */; };
+		1695AD9C2CB9064800D9B6F9 /* ACarousel in Frameworks */ = {isa = PBXBuildFile; productRef = 1695AD9B2CB9064800D9B6F9 /* ACarousel */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +36,7 @@
 		1695AD822CB8F74E00D9B6F9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1695AD842CB8F74E00D9B6F9 /* RememberThisApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RememberThisApp.swift; sourceTree = "<group>"; };
 		1695AD922CB8F89C00D9B6F9 /* RememberThisSwiftDataConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RememberThisSwiftDataConfiguration.swift; sourceTree = "<group>"; };
+		1695AD952CB8FEC600D9B6F9 /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,6 +44,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1695AD9C2CB9064800D9B6F9 /* ACarousel in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -142,6 +146,7 @@
 		1695AD942CB8F9F900D9B6F9 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				1695AD952CB8FEC600D9B6F9 /* ColorExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -163,6 +168,7 @@
 			);
 			name = RememberThis;
 			packageProductDependencies = (
+				1695AD9B2CB9064800D9B6F9 /* ACarousel */,
 			);
 			productName = RememberThis;
 			productReference = 1692EB282CB7502E0050394C /* RememberThis.app */;
@@ -192,6 +198,9 @@
 			);
 			mainGroup = 1692EB1F2CB7502E0050394C;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				1695AD9A2CB9064800D9B6F9 /* XCLocalSwiftPackageReference "ACarousel" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 1692EB292CB7502E0050394C /* Products */;
 			projectDirPath = "";
@@ -228,6 +237,7 @@
 				1695AD8C2CB8F74E00D9B6F9 /* RememberThisSplashViewModel.swift in Sources */,
 				1695AD932CB8F8A800D9B6F9 /* RememberThisSwiftDataConfiguration.swift in Sources */,
 				1695AD8D2CB8F74E00D9B6F9 /* RememberThisApp.swift in Sources */,
+				1695AD962CB8FEDA00D9B6F9 /* ColorExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -435,6 +445,20 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		1695AD9A2CB9064800D9B6F9 /* XCLocalSwiftPackageReference "ACarousel" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ACarousel;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		1695AD9B2CB9064800D9B6F9 /* ACarousel */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ACarousel;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 1692EB202CB7502E0050394C /* Project object */;
 }

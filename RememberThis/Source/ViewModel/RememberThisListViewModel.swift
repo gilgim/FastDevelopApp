@@ -10,8 +10,6 @@ import UserNotifications
 
 @Observable
 class RememberThisListViewModel {
-    var remembers: [RememberModel] = []
-    
     @MainActor
     func deleteRemember(_ rememberThis: RememberModel) {
         for rememberDate in rememberThis.rememberDates ?? [] {
@@ -58,6 +56,5 @@ class RememberThisListViewModel {
         }
         RememberThisSwiftDataConfiguration.context.delete(rememberThis)  // 데이터 삭제
         try? RememberThisSwiftDataConfiguration.context.save()  // 변경 사항 저장
-        
     }
 }
