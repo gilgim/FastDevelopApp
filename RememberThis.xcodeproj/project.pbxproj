@@ -6,30 +6,33 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		1695AD862CB8F74E00D9B6F9 /* RememberModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1695AD742CB8F74E00D9B6F9 /* RememberModel.swift */; };
+		1695AD872CB8F74E00D9B6F9 /* AddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1695AD7A2CB8F74E00D9B6F9 /* AddView.swift */; };
+		1695AD882CB8F74E00D9B6F9 /* ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1695AD7B2CB8F74E00D9B6F9 /* ListView.swift */; };
+		1695AD892CB8F74E00D9B6F9 /* RememberThisSplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1695AD7C2CB8F74E00D9B6F9 /* RememberThisSplashView.swift */; };
+		1695AD8A2CB8F74E00D9B6F9 /* AddViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1695AD7E2CB8F74E00D9B6F9 /* AddViewModel.swift */; };
+		1695AD8B2CB8F74E00D9B6F9 /* ListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1695AD7F2CB8F74E00D9B6F9 /* ListViewModel.swift */; };
+		1695AD8C2CB8F74E00D9B6F9 /* RememberThisSplashViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1695AD802CB8F74E00D9B6F9 /* RememberThisSplashViewModel.swift */; };
+		1695AD8D2CB8F74E00D9B6F9 /* RememberThisApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1695AD842CB8F74E00D9B6F9 /* RememberThisApp.swift */; };
+		1695AD8E2CB8F74E00D9B6F9 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1695AD762CB8F74E00D9B6F9 /* Preview Assets.xcassets */; };
+		1695AD8F2CB8F74E00D9B6F9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1695AD782CB8F74E00D9B6F9 /* Assets.xcassets */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		1692EB282CB7502E0050394C /* RememberThis.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RememberThis.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1695AD742CB8F74E00D9B6F9 /* RememberModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RememberModel.swift; sourceTree = "<group>"; };
+		1695AD762CB8F74E00D9B6F9 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		1695AD782CB8F74E00D9B6F9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		1695AD7A2CB8F74E00D9B6F9 /* AddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddView.swift; sourceTree = "<group>"; };
+		1695AD7B2CB8F74E00D9B6F9 /* ListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListView.swift; sourceTree = "<group>"; };
+		1695AD7C2CB8F74E00D9B6F9 /* RememberThisSplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RememberThisSplashView.swift; sourceTree = "<group>"; };
+		1695AD7E2CB8F74E00D9B6F9 /* AddViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddViewModel.swift; sourceTree = "<group>"; };
+		1695AD7F2CB8F74E00D9B6F9 /* ListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewModel.swift; sourceTree = "<group>"; };
+		1695AD802CB8F74E00D9B6F9 /* RememberThisSplashViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RememberThisSplashViewModel.swift; sourceTree = "<group>"; };
+		1695AD822CB8F74E00D9B6F9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1695AD842CB8F74E00D9B6F9 /* RememberThisApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RememberThisApp.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
-
-/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		1695AC7A2CB8A6A600D9B6F9 /* Exceptions for "RememberThis" folder in "RememberThis" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				Source/Info.plist,
-			);
-			target = 1692EB272CB7502E0050394C /* RememberThis */;
-		};
-/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
-
-/* Begin PBXFileSystemSynchronizedRootGroup section */
-		1692EB2A2CB7502E0050394C /* RememberThis */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				1695AC7A2CB8A6A600D9B6F9 /* Exceptions for "RememberThis" folder in "RememberThis" target */,
-			);
-			path = RememberThis;
-			sourceTree = "<group>";
-		};
-/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		1692EB252CB7502E0050394C /* Frameworks */ = {
@@ -45,7 +48,7 @@
 		1692EB1F2CB7502E0050394C = {
 			isa = PBXGroup;
 			children = (
-				1692EB2A2CB7502E0050394C /* RememberThis */,
+				1695AD852CB8F74E00D9B6F9 /* RememberThis */,
 				1692EB292CB7502E0050394C /* Products */,
 			);
 			sourceTree = "<group>";
@@ -56,6 +59,72 @@
 				1692EB282CB7502E0050394C /* RememberThis.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		1695AD752CB8F74E00D9B6F9 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				1695AD742CB8F74E00D9B6F9 /* RememberModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		1695AD772CB8F74E00D9B6F9 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				1695AD762CB8F74E00D9B6F9 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		1695AD792CB8F74E00D9B6F9 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				1695AD772CB8F74E00D9B6F9 /* Preview Content */,
+				1695AD782CB8F74E00D9B6F9 /* Assets.xcassets */,
+			);
+			path = Resource;
+			sourceTree = "<group>";
+		};
+		1695AD7D2CB8F74E00D9B6F9 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				1695AD7A2CB8F74E00D9B6F9 /* AddView.swift */,
+				1695AD7B2CB8F74E00D9B6F9 /* ListView.swift */,
+				1695AD7C2CB8F74E00D9B6F9 /* RememberThisSplashView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		1695AD812CB8F74E00D9B6F9 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				1695AD7E2CB8F74E00D9B6F9 /* AddViewModel.swift */,
+				1695AD7F2CB8F74E00D9B6F9 /* ListViewModel.swift */,
+				1695AD802CB8F74E00D9B6F9 /* RememberThisSplashViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		1695AD832CB8F74E00D9B6F9 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				1695AD822CB8F74E00D9B6F9 /* Info.plist */,
+				1695AD792CB8F74E00D9B6F9 /* Resource */,
+				1695AD7D2CB8F74E00D9B6F9 /* View */,
+				1695AD812CB8F74E00D9B6F9 /* ViewModel */,
+				1695AD752CB8F74E00D9B6F9 /* Model */,
+			);
+			path = Source;
+			sourceTree = "<group>";
+		};
+		1695AD852CB8F74E00D9B6F9 /* RememberThis */ = {
+			isa = PBXGroup;
+			children = (
+				1695AD842CB8F74E00D9B6F9 /* RememberThisApp.swift */,
+				1695AD832CB8F74E00D9B6F9 /* Source */,
+			);
+			path = RememberThis;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -72,9 +141,6 @@
 			buildRules = (
 			);
 			dependencies = (
-			);
-			fileSystemSynchronizedGroups = (
-				1692EB2A2CB7502E0050394C /* RememberThis */,
 			);
 			name = RememberThis;
 			packageProductDependencies = (
@@ -122,6 +188,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1695AD8E2CB8F74E00D9B6F9 /* Preview Assets.xcassets in Resources */,
+				1695AD8F2CB8F74E00D9B6F9 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -132,6 +200,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1695AD862CB8F74E00D9B6F9 /* RememberModel.swift in Sources */,
+				1695AD872CB8F74E00D9B6F9 /* AddView.swift in Sources */,
+				1695AD882CB8F74E00D9B6F9 /* ListView.swift in Sources */,
+				1695AD892CB8F74E00D9B6F9 /* RememberThisSplashView.swift in Sources */,
+				1695AD8A2CB8F74E00D9B6F9 /* AddViewModel.swift in Sources */,
+				1695AD8B2CB8F74E00D9B6F9 /* ListViewModel.swift in Sources */,
+				1695AD8C2CB8F74E00D9B6F9 /* RememberThisSplashViewModel.swift in Sources */,
+				1695AD8D2CB8F74E00D9B6F9 /* RememberThisApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
