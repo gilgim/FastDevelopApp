@@ -23,10 +23,14 @@ class RememberModel {
 @Model
 class RememberDateModel {
     var id: UUID
+    var calendarID: String?
+    var reminderID: String?
     var date: Date
     @Relationship var rememberThis: RememberModel?
-    init(id: UUID, date: Date) {
+    init(id: UUID, calendarID: String? = nil, reminderID: String? = nil, date: Date) {
         self.id = id
+        self.calendarID = calendarID
+        self.reminderID = reminderID
         self.date = date
     }
 }

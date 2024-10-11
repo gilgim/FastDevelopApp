@@ -19,6 +19,10 @@ struct AddView: View {
             TextEditor(text: $bindingVm.rememberThisDescription)
                 .frame(height: 100)
                 .padding(.leading, 24)
+            Toggle("캘린더에 추가", isOn: $bindingVm.isAddAccessCalendar)
+                .padding(.horizontal, 24)
+            Toggle("미리알림에 추가", isOn: $bindingVm.isAddAccessReminder)
+                .padding(.horizontal, 24)
             List {
                 Button("일정 추가") {
                     vm.addDate()
@@ -34,7 +38,7 @@ struct AddView: View {
         .toolbar {
             Button("Ok") {
                 Task {
-                    self.vm.createRemember()
+                    await self.vm.createRemember()
                     self.dismiss()
                 }
             }

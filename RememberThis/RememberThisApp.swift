@@ -10,9 +10,14 @@ import SwiftData
 
 @main
 struct RememberThisApp: App {
+    @AppStorage("isFirstLaunch") private var isFirstLaunch: Bool = false
     var body: some Scene {
         WindowGroup {
-            ListView()
+            if isFirstLaunch == false {
+                RememberThisSplashView()
+            } else {
+                ListView()
+            }
         }
         .modelContainer(RememberThisConfiguration.container)
     }
