@@ -57,4 +57,60 @@ class RememberThisListViewModel {
         RememberThisSwiftDataConfiguration.context.delete(rememberThis)  // 데이터 삭제
         try? RememberThisSwiftDataConfiguration.context.save()  // 변경 사항 저장
     }
+    //  생성날짜
+    func createDateText(_ rememberDate: RememberModel) -> String {
+        let date = rememberDate.createDate
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy년 MM월 dd일 HH시 mm분 부터"
+        return formatter.string(from: date)
+    }
+    //  완료날짜
+    //  지난기간
+    //  실제일정
+    func rememberDateText(_ rememberDate: RememberDateModel) -> String {
+        let date = rememberDate.date
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy.MM.dd"
+        return formatter.string(from: date)
+    }
+    enum ReminderStatus {
+        case incomplete      // 미완료
+        case complete        // 완료
+        case urgent          // 빠름 (긴급)
+        case overdue         // 일정 지남 (기한 초과)
+    }
+    
+    @MainActor
+    func rememberDateOk(_ rememberDate: RememberDateModel) {
+        let rememberDate = RememberThisSwiftDataConfiguration.loadData(RememberDateModel.self)?.filter({$0.id == rememberDate.id})
+        if let rememberDate {
+            
+        }
+        try? RememberThisSwiftDataConfiguration.context.save()
+    }
+    
+    func rememberDateCheck(_ rememberDate: RememberDateModel) -> ReminderStatus {
+        let eventStore = EKEventStore()
+        
+        // EventKit의 reminderID가 있을 경우
+        if let reminderID = rememberDate.reminderID,
+           let reminder = eventStore.calendarItem(withIdentifier: reminderID) as? EKReminder {
+            
+            // 미리 알림이 완료된 경우
+            if let completionDate = reminder.completionDate {
+                return completionDate < Date() ? .urgent : .complete
+            }
+            
+            // 미리 알림이 완료되지 않았고, 기한이 지난 경우
+            return rememberDate.date < Date() ? .overdue : .incomplete
+        }
+        
+        // EventKit의 reminderID가 없을 경우
+        if let completeDate = rememberDate.completeDate {
+            return completeDate < Date() ? .urgent : .complete
+        }
+        
+        // 미리 알림이 완료되지 않았고, 기한이 지난 경우
+        return rememberDate.date < Date() ? .overdue : .incomplete
+    }
 }

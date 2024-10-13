@@ -1,10 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-    <dict>
-        <key>NSCalendarsUsageDescription</key>
-        <string>이 앱은 캘린더에 일정을 추가하기 위해 권한이 필요합니다.</string>
-        <key>NSRemindersUsageDescription</key>
-        <string>이 앱은 미리알림을 추가하기 위해 권한이 필요합니다.</string>
-    </dict>
+<dict>
+	<key>NSCalendarsUsageDescription</key>
+	<string>이 앱은 캘린더에 일정을 추가하기 위해 권한이 필요합니다.</string>
+	<key>NSRemindersUsageDescription</key>
+	<string>이 앱은 미리알림을 추가하기 위해 권한이 필요합니다.</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Tenada.ttf</string>
+		<string>Pretendard-Black.ttf</string>
+		<string>Pretendard-Bold.ttf</string>
+		<string>Pretendard-ExtraBold.ttf</string>
+		<string>Pretendard-ExtraLight.ttf</string>
+		<string>Pretendard-Light.ttf</string>
+		<string>Pretendard-Medium.ttf</string>
+		<string>Pretendard-Regular.ttf</string>
+		<string>Pretendard-SemiBold.ttf</string>
+		<string>Pretendard-Thin.ttf</string>
+	</array>
+</dict>
 </plist>

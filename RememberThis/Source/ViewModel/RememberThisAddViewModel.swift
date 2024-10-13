@@ -56,7 +56,7 @@ class RememberThisAddViewModel {
             rememberDate.append(rememberDateModel)
             RememberThisSwiftDataConfiguration.context.insert(rememberDateModel)
         }
-        let rememberThis = RememberModel(id: .init(), rememberName: rememberThisName, rememberDescription: rememberThisDescription)
+        let rememberThis = RememberModel(id: .init(), rememberName: rememberThisName, rememberDescription: rememberThisDescription, createData: Date())
         rememberThis.rememberDates = rememberDate
         RememberThisSwiftDataConfiguration.context.insert(rememberThis)
         try? RememberThisSwiftDataConfiguration.context.save()

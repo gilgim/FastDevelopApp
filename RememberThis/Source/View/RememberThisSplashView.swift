@@ -12,17 +12,20 @@ struct RememberThisSplashView: View {
     @AppStorage("isFirstLaunch") private var isFirstLaunch: Bool = false
     let vm = RememberThisSplashViewModel()
     var body: some View {
-        VStack {
-            Text("캘린더에")
-        }
-        .onAppear() {
-            vm.requestPermissions()
-        }
-        .toolbar {
-            Button {
-                self.isFirstLaunch = true
-            } label: {
-                Image(systemName: "xmark")
+        NavigationStack {
+            VStack {
+                Text("캘린더에")
+            }
+            .onAppear() {
+                vm.requestPermissions()
+            }
+            .toolbar {
+                Button {
+                    self.isFirstLaunch = true
+                } label: {
+                    Image(systemName: "xmark")
+                        .tint(.white)
+                }
             }
         }
     }
