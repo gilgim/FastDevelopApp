@@ -37,11 +37,13 @@ class RememberThisListViewModel {
     @MainActor
     func loadRememberSchedules() {
         rememberThisComponents = []
-        let schedules = RememberThisSwiftDataConfiguration.loadData(RememberScheduleModel.self) ?? []
+        var schedules = RememberThisSwiftDataConfiguration.loadData(RememberScheduleModel.self) ?? []
+        schedules.sort(by: {$0.creationDate > $1.creationDate})
         for schedule in schedules {
             let createAt = schedule.creationDate.formmatToString("yyyy년 MM월 dd일 HH시 mm분 부터")
             var dateComponents: [RememberThisComponent.RememberThisDateComponent] = []
-            let rememberDates = schedule.rememberDates ?? []
+            var rememberDates = schedule.rememberDates ?? []
+            rememberDates.sort(by: {$0.date < $1.date})
             var completeCount = 0
             for (index, rememberDate) in rememberDates.enumerated() {
                 //  미리알림 있으면 동기화해야한다.
