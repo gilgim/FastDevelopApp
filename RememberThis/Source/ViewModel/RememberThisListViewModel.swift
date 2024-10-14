@@ -7,11 +7,93 @@
 import Foundation
 import EventKit
 import UserNotifications
-
+import SwiftUI
 @Observable
 class RememberThisListViewModel {
+    struct RememberThisComponent {
+        enum ReminderStatus {
+            case overdue
+            case incomplete
+            case complete
+            case earlyComplete
+            case lateComplete
+        }
+        var originModel: RememberScheduleModel
+        var name: String
+        var createdAt: String
+        var completePertage: String
+        var dateComponents: [RememberThisDateComponent]
+        struct RememberThisDateComponent {
+            var imageName: String
+            var date: String
+            var koreanScheduleText: String
+            var status: ReminderStatus
+            var originModel: RememberScheduleDetailModel
+            var color: Color
+            var strikeThrough: Bool
+        }
+    }
+    var rememberThisComponents: [RememberThisComponent] = []
     @MainActor
-    func deleteRemember(_ rememberThis: RememberModel) {
+    func loadRememberSchedules() {
+        rememberThisComponents = []
+        let schedules = RememberThisSwiftDataConfiguration.loadData(RememberScheduleModel.self) ?? []
+        for schedule in schedules {
+            let createAt = schedule.creationDate.formmatToString("yyyy년 MM월 dd일 HH시 mm분 부터")
+            var dateComponents: [RememberThisComponent.RememberThisDateComponent] = []
+            let rememberDates = schedule.rememberDates ?? []
+            var completeCount = 0
+            for (index, rememberDate) in rememberDates.enumerated() {
+                //  미리알림 있으면 동기화해야한다.
+                let eventStore = EKEventStore()
+                if let reminderID = rememberDate.reminderID,
+                   let reminder = eventStore.calendarItem(withIdentifier: reminderID) as? EKReminder {
+                    rememberDate.completeDate = reminder.completionDate
+                    try? RememberThisSwiftDataConfiguration.context.save()
+                }
+                if rememberDate.completeDate != nil {
+                    completeCount += 1
+                }
+                let koreanScheduleText = (repetitionDictionary["repeat\(index+1)"] ?? "") + " 암기"
+                //  완료: 미리완료, 늦게완료, 완벽완료
+                var dateComponent = RememberThisComponent.RememberThisDateComponent(imageName: "", date: rememberDate.date.formmatToString("yyyy.MM.dd"), koreanScheduleText: koreanScheduleText, status: .incomplete, originModel: rememberDate, color: .clear, strikeThrough: false)
+                if let completeDate = rememberDate.completeDate {
+                    dateComponent.strikeThrough = true
+                    if completeDate > rememberDate.date {
+                        dateComponent.imageName = "exclamationmark.square"
+                        dateComponent.status = .lateComplete
+                        dateComponent.color = .yellow
+                    } else if completeDate == rememberDate.date {
+                        dateComponent.imageName = "checkmark.square.fill"
+                        dateComponent.status = .complete
+                        dateComponent.color = .green
+                    } else if completeDate < rememberDate.date {
+                        dateComponent.imageName = "exclamationmark.square"
+                        dateComponent.status = .earlyComplete
+                        dateComponent.color = .yellow
+                    }
+                } else {
+                    dateComponent.strikeThrough = false
+                    if rememberDate.date < Date() {
+                        dateComponent.imageName = "multiply.square"
+                        dateComponent.status = .overdue
+                        dateComponent.color = .red
+                    } else {
+                        dateComponent.imageName = "square"
+                        dateComponent.status = .incomplete
+                        dateComponent.color = .black58
+                    }
+                }
+                dateComponents.append(dateComponent)
+            }
+            let completePertage = Int(Double(completeCount)/Double(rememberDates.count) * 100)
+            
+            let rememberThisComponent = RememberThisComponent(originModel: schedule, name: schedule.scheduleName, createdAt: createAt, completePertage: "\(completePertage)%", dateComponents: dateComponents)
+            self.rememberThisComponents.append(rememberThisComponent)
+        }
+    }
+    @MainActor
+    func deleteRemember(_ rememberThis: RememberScheduleModel) {
         for rememberDate in rememberThis.rememberDates ?? [] {
             let identifier = "\(rememberDate.id)"
             UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [identifier])
@@ -57,60 +139,25 @@ class RememberThisListViewModel {
         RememberThisSwiftDataConfiguration.context.delete(rememberThis)  // 데이터 삭제
         try? RememberThisSwiftDataConfiguration.context.save()  // 변경 사항 저장
     }
-    //  생성날짜
-    func createDateText(_ rememberDate: RememberModel) -> String {
-        let date = rememberDate.createDate
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy년 MM월 dd일 HH시 mm분 부터"
-        return formatter.string(from: date)
-    }
-    //  완료날짜
-    //  지난기간
-    //  실제일정
-    func rememberDateText(_ rememberDate: RememberDateModel) -> String {
-        let date = rememberDate.date
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy.MM.dd"
-        return formatter.string(from: date)
-    }
-    enum ReminderStatus {
-        case incomplete      // 미완료
-        case complete        // 완료
-        case urgent          // 빠름 (긴급)
-        case overdue         // 일정 지남 (기한 초과)
-    }
-    
     @MainActor
-    func rememberDateOk(_ rememberDate: RememberDateModel) {
-        let rememberDate = RememberThisSwiftDataConfiguration.loadData(RememberDateModel.self)?.filter({$0.id == rememberDate.id})
-        if let rememberDate {
-            
-        }
-        try? RememberThisSwiftDataConfiguration.context.save()
-    }
-    
-    func rememberDateCheck(_ rememberDate: RememberDateModel) -> ReminderStatus {
+    func remeberThis(_ model: RememberScheduleDetailModel) {
         let eventStore = EKEventStore()
-        
-        // EventKit의 reminderID가 있을 경우
-        if let reminderID = rememberDate.reminderID,
+        if let reminderID = model.reminderID,
            let reminder = eventStore.calendarItem(withIdentifier: reminderID) as? EKReminder {
-            
-            // 미리 알림이 완료된 경우
-            if let completionDate = reminder.completionDate {
-                return completionDate < Date() ? .urgent : .complete
+            if reminder.completionDate == nil {
+                reminder.completionDate = Date()
+            } else {
+                reminder.completionDate = nil
             }
-            
-            // 미리 알림이 완료되지 않았고, 기한이 지난 경우
-            return rememberDate.date < Date() ? .overdue : .incomplete
+            try? eventStore.save(reminder, commit: true)
+        } else {
+            if model.completeDate == nil {
+                model.completeDate = Date()
+            } else {
+                model.completeDate = nil
+            }
+            try? RememberThisSwiftDataConfiguration.context.save()
         }
-        
-        // EventKit의 reminderID가 없을 경우
-        if let completeDate = rememberDate.completeDate {
-            return completeDate < Date() ? .urgent : .complete
-        }
-        
-        // 미리 알림이 완료되지 않았고, 기한이 지난 경우
-        return rememberDate.date < Date() ? .overdue : .incomplete
+        self.loadRememberSchedules()
     }
 }

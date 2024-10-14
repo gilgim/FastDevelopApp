@@ -38,10 +38,10 @@ class RememberThisAddViewModel {
     @MainActor
     func createRemember() async {
         //  스위프트 데이터에 추가
-        var rememberDate: [RememberDateModel] = []
+        var rememberDate: [RememberScheduleDetailModel] = []
         for date in rememberRepeatDates {
             let rememberDateID = UUID()
-            let rememberDateModel = RememberDateModel(id: rememberDateID, date: date)
+            let rememberDateModel = RememberScheduleDetailModel(id: rememberDateID, date: date)
             self.addNotification(id: rememberDateID, date: date)
             if isAddAccessCalendar {
                 if let event = try? await addCalendar(date: date) {
@@ -56,7 +56,7 @@ class RememberThisAddViewModel {
             rememberDate.append(rememberDateModel)
             RememberThisSwiftDataConfiguration.context.insert(rememberDateModel)
         }
-        let rememberThis = RememberModel(id: .init(), rememberName: rememberThisName, rememberDescription: rememberThisDescription, createData: Date())
+        let rememberThis = RememberScheduleModel(id: .init(), scheduleName: rememberThisName, scheduleDescription: rememberThisDescription, creationDate: Date())
         rememberThis.rememberDates = rememberDate
         RememberThisSwiftDataConfiguration.context.insert(rememberThis)
         try? RememberThisSwiftDataConfiguration.context.save()
