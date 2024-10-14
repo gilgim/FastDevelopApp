@@ -138,6 +138,7 @@ class RememberThisListViewModel {
         }
         RememberThisSwiftDataConfiguration.context.delete(rememberThis)  // 데이터 삭제
         try? RememberThisSwiftDataConfiguration.context.save()  // 변경 사항 저장
+        self.loadRememberSchedules()
     }
     @MainActor
     func remeberThis(_ model: RememberScheduleDetailModel) {
