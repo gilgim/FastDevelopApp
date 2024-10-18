@@ -15,6 +15,7 @@ struct RememberThisListView: View {
     @State var selected: RememberScheduleModel?
     @State var isDeletePresented: Bool = false
     @State var focusIndex: Int = 0
+    var navigationPath: NavigationPath = .init()
     var body: some View {
         NavigationStack {
             ZStack {
@@ -108,9 +109,9 @@ struct RememberThisListView: View {
                     Image(systemName: "plus")
                 }
             }
-        }
-        .onAppear() {
-            vm.loadRememberSchedules()
+            .onAppear() {
+                vm.loadRememberSchedules()
+            }
         }
     }
 }

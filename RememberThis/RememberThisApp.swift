@@ -19,15 +19,15 @@ struct RememberThisApp: App {
             } else {
                 ZStack {
                     RememberThisListView()
-                    if isShowMask {
-                        RememberThisMaskView()
-                            .onAppear() {
-                                Task {
-                                    try? await Task.sleep(nanoseconds: 600_000_000)
-                                    self.isShowMask = false
-                                }
-                            }
-                    }
+//                    if isShowMask {
+//                        RememberThisMaskView()
+//                            .onAppear() {
+//                                Task {
+//                                    try? await Task.sleep(nanoseconds: 600_000_000)
+//                                    self.isShowMask = false
+//                                }
+//                            }
+//                    }
                 }
             }
         }

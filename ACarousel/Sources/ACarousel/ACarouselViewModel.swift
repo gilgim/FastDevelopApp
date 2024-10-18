@@ -264,57 +264,61 @@ extension ACarouselViewModel {
     }
     
     private func dragChanged(_ value: DragGesture.Value) {
-        self.dragOffsetYs[activeIndex] = 0
-        isAnimatedOffset = true
-        
-        /// Defines the maximum value of the drag
-        /// Avoid dragging more than the values of multiple subviews at the end of the drag,
-        /// and still only one subview is toggled
-        var offset: CGFloat = itemActualWidth
-        if value.translation.width > 0 {
-            offset = min(offset, value.translation.width)
-        } else {
-            offset = max(-offset, value.translation.width)
+        withAnimation {
+            self.dragOffsetYs[activeIndex] = 0
+            isAnimatedOffset = true
+            
+            /// Defines the maximum value of the drag
+            /// Avoid dragging more than the values of multiple subviews at the end of the drag,
+            /// and still only one subview is toggled
+            var offset: CGFloat = itemActualWidth
+            if value.translation.width > 0 {
+                offset = min(offset, value.translation.width)
+            } else {
+                offset = max(-offset, value.translation.width)
+            }
+            
+            /// set drag offset
+            dragOffset = offset
+            
+            /// stop active timer
+            isTimerActive = false
         }
-        
-        /// set drag offset
-        dragOffset = offset
-        
-        /// stop active timer
-        isTimerActive = false
     }
     
     private func dragEnded(_ value: DragGesture.Value) {
-        /// reset drag offset
-        dragOffset = .zero
-        
-        /// reset timing and restart active timer
-        resetTiming()
-        isTimerActive = true
-        
-        if value.translation.height < -120 {
-            self.dragOffsetYs[activeIndex] = -65
-            return
+        withAnimation {
+            /// reset drag offset
+            dragOffset = .zero
+            
+            /// reset timing and restart active timer
+            resetTiming()
+            isTimerActive = true
+            
+            if value.translation.height < -60 {
+                self.dragOffsetYs[activeIndex] = -65
+                return
+            }
+            if value.translation.height > 180 {
+                self.dragOffsetYs[activeIndex] = 0
+                return
+            }
+            
+            /// Defines the drag threshold
+            /// At the end of the drag, if the drag value exceeds the drag threshold,
+            /// the active view will be toggled
+            /// default is one third of subview
+            let dragThreshold: CGFloat = itemWidth / 3
+            
+            var activeIndex = self.activeIndex
+            if value.translation.width > dragThreshold {
+                activeIndex -= 1
+            }
+            if value.translation.width < -dragThreshold {
+                activeIndex += 1
+            }
+            self.activeIndex = max(0, min(activeIndex, data.count - 1))
         }
-        if value.translation.height > 180 {
-            self.dragOffsetYs[activeIndex] = 0
-            return
-        }
-        
-        /// Defines the drag threshold
-        /// At the end of the drag, if the drag value exceeds the drag threshold,
-        /// the active view will be toggled
-        /// default is one third of subview
-        let dragThreshold: CGFloat = itemWidth / 3
-        
-        var activeIndex = self.activeIndex
-        if value.translation.width > dragThreshold {
-            activeIndex -= 1
-        }
-        if value.translation.width < -dragThreshold {
-            activeIndex += 1
-        }
-        self.activeIndex = max(0, min(activeIndex, data.count - 1))
     }
 }
 

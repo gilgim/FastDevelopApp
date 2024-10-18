@@ -12,7 +12,7 @@ import UserNotifications
 class RememberThisAddViewModel {
     var rememberThisName: String = ""
     var rememberThisDescription: String = ""
-    var rememberRepeatDates: [Date] = []
+    var rememberRepeatDates: [Date] = [Date()]
     var isAddAccessCalendar: Bool = false
     var isAddAccessReminder: Bool = false
     
@@ -30,8 +30,6 @@ class RememberThisAddViewModel {
         if let lastDate = rememberRepeatDates.last {
             let nextDate = Calendar.current.date(byAdding: .day, value: 1, to: lastDate)!
             rememberRepeatDates.append(nextDate)
-        } else {
-            rememberRepeatDates.append(Date())
         }
     }
     
@@ -136,5 +134,36 @@ class RememberThisAddViewModel {
                 }
             }
         }
+    }
+    func rememberRepeatCycle(targetIndex: Int) -> String {
+        let firstDate = self.rememberRepeatDates.first ?? Date()
+        let targetDate = self.rememberRepeatDates[targetIndex]
+        let calendar = Calendar.current
+        
+        let components = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: firstDate, to: targetDate)
+        
+        var result = ""
+        
+        if let years = components.year, years > 0 {
+            result += "\(years)년 "
+        }
+        
+        if let months = components.month, months > 0 {
+            result += "\(months)달 "
+        }
+        
+        if let days = components.day, days > 0 {
+            result += "\(days)일 "
+        }
+        
+        if let hours = components.hour, hours > 0 {
+            result += "\(hours)시간 "
+        }
+        
+        if let minutes = components.minute, minutes > 0 {
+            result += "\(minutes)분 "
+        }
+        
+        return result.isEmpty ? "0분" : result.trimmingCharacters(in: .whitespaces)
     }
 }
