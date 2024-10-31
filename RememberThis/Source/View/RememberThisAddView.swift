@@ -14,6 +14,74 @@ struct RememberThisAddView: View {
     var body: some View {
         @Bindable var bindingVm = vm
         VStack(alignment: .leading, spacing: 0) {
+            Group {
+                HStack {
+                    Text("기억 주기")
+                        .font(.pretendard(size: 14, weight: .regular))
+                        .foregroundStyle(Color(hex:"666666"))
+                    Spacer()
+                    Text("캘린더에 추가")
+                        .font(.pretendard(size: 14, weight: .regular))
+                        .foregroundStyle(Color(hex: self.vm.isAddAccessCalendar ? "28A745" : "999999"))
+                        .onTapGesture {
+                            withAnimation {
+                                self.vm.isAddAccessCalendar.toggle()
+                            }
+                        }
+                    Text("미리알림에 추가")
+                        .font(.pretendard(size: 14, weight: .regular))
+                        .foregroundStyle(Color(hex: self.vm.isAddAccessReminder ? "28A745" : "999999"))
+                        .onTapGesture {
+                            withAnimation {
+                                self.vm.isAddAccessReminder.toggle()
+                            }
+                        }
+                        .padding(.trailing, 16)
+                }
+                .padding(.top, 16)
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 16) {
+                        ForEach(1..<vm.rememberRepeatDates.count, id: \.self) { index in
+                            let dateText = vm.rememberRepeatCycle( targetIndex: index)
+                            ZStack {
+                                RoundedRectangle(cornerRadius: 8)
+                                    .foregroundStyle(Color(hex:"DDDDDD"))
+                                RoundedRectangle(cornerRadius: 6)
+                                    .foregroundStyle(.white)
+                                    .padding(2)
+                                Text(dateText + "뒤")
+                                    .font(.pretendard(size: 16, weight: .bold))
+                                    .foregroundStyle(Color(hex:"333333"))
+                                    .padding(.horizontal, 12)
+                            }
+                            .frame(height: 44)
+                            .onTapGesture {
+                                self.selectDateIndex = index
+                            }
+                        }
+                        ZStack {
+                            RoundedRectangle(cornerRadius: 8)
+                                .foregroundStyle(Color(hex:"007AFF"))
+                            RoundedRectangle(cornerRadius: 7)
+                                .padding(1)
+                                .foregroundStyle(.white)
+                            Image(systemName: "plus")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 14, height: 14)
+                                .foregroundStyle(Color(hex:"007AFF"))
+                                .fontWeight(.bold)
+                        }
+                        .frame(width: 80, height: 44)
+                        .onTapGesture {
+                            vm.addDate()
+                        }
+                        Spacer()
+                    }
+                }
+                .frame(height: 60)
+            }
+            .padding(.leading, 16)
             //  기억 제목
             Group {
                 Text("기억 제목")
@@ -60,59 +128,6 @@ struct RememberThisAddView: View {
                 .padding(.top, 8)
             }
             .padding(.leading, 16)
-            Group {
-                Text("기억 주기")
-                    .font(.pretendard(size: 14, weight: .regular))
-                    .foregroundStyle(Color(hex:"666666"))
-                    .padding(.top, 16)
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: 16) {
-                        ForEach(1..<vm.rememberRepeatDates.count, id: \.self) { index in
-                            let dateText = vm.rememberRepeatCycle( targetIndex: index)
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 8)
-                                    .foregroundStyle(Color(hex:"DDDDDD"))
-                                RoundedRectangle(cornerRadius: 6)
-                                    .foregroundStyle(.white)
-                                    .padding(2)
-                                Text(dateText)
-                                    .font(.pretendard(size: 16, weight: .bold))
-                                    .foregroundStyle(Color(hex:"333333"))
-                                    .padding(.horizontal, 12)
-                            }
-                            .frame(height: 44)
-                            .onTapGesture {
-                                self.selectDateIndex = index
-                            }
-                        }
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 8)
-                                .foregroundStyle(Color(hex:"007AFF"))
-                            RoundedRectangle(cornerRadius: 7)
-                                .padding(1)
-                                .foregroundStyle(.white)
-                            Image(systemName: "plus")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 14, height: 14)
-                                .foregroundStyle(Color(hex:"007AFF"))
-                                .fontWeight(.bold)
-                        }
-                        .frame(width: 80, height: 44)
-                        .onTapGesture {
-                            vm.addDate()
-                        }
-                        Spacer()
-                    }
-                }
-                .frame(height: 60)
-            }
-            .padding(.leading, 16)
-            Toggle("캘린더에 추가", isOn: $bindingVm.isAddAccessCalendar)
-                .padding(.horizontal, 24)
-            Toggle("미리알림에 추가", isOn: $bindingVm.isAddAccessReminder)
-                .padding(.horizontal, 24)
-            Spacer()
         }
         .toolbar {
             Button("Ok") {
@@ -141,6 +156,18 @@ struct RememberThisAddView: View {
 
 #Preview {
     RememberThisAddView()
+//    RememberRepeatSettingView()
+}
+struct RememberRepeatSettingView: View {
+    var body: some View {
+        VStack {
+            Text("1일")
+            HStack {
+                Text("암기 예정일 : 2024.10.11")
+                
+            }
+        }
+    }
 }
 struct ForgettingCurveWithReviewView: View {
     // 초기 기억값과 망각 속도 상수
@@ -176,70 +203,60 @@ struct ForgettingCurveWithReviewView: View {
             
             // 그래프 영역
             GeometryReader { geometry in
-                ZStack {
-                    // X축과 Y축 라벨
+                HStack {
+                    VStack(alignment:.leading) {
+                        Spacer()
+                        Text("기\n억\n 보\n유\n량 (%)")
+                    }
+                    .frame(width: 30)
+                    .offset(y: -50)
                     VStack {
-                        Spacer()
+                        Path { path in
+                            let width = geometry.size.width
+                            let height = geometry.size.height
+                            
+                            path.move(to: CGPoint(x: 0, y: height))
+                            
+                            // 시간을 0에서 10까지 진행하면서 각 시간에 대한 기억 보유량을 계산하고 라인을 그림
+                            for time in stride(from: 0.0, to: 10.0, by: 0.1) {
+                                let x = CGFloat(time / 10.0) * width
+                                let y = CGFloat(1.0 - retention(at: time) / S) * height
+                                path.addLine(to: CGPoint(x: x, y: y))
+                            }
+                        }
+                        .stroke(Color.blue, lineWidth: 1)
                         HStack {
-                            Text("기억 보유량 (%)")
-                                .rotationEffect(.degrees(-90))
-                                .offset(y: -50)
                             Spacer()
-                        }
-                        .padding(.leading, 10)
-                    }
-                    
-                    HStack {
-                        Spacer()
-                        VStack {
-                            Spacer()
-                            Text("시간 (t)")
-                        }
-                        .padding(.bottom, 10)
-                    }
-                    
-                    Path { path in
-                        let width = geometry.size.width
-                        let height = geometry.size.height
-                        
-                        path.move(to: CGPoint(x: 0, y: height))
-                        
-                        // 시간을 0에서 10까지 진행하면서 각 시간에 대한 기억 보유량을 계산하고 라인을 그림
-                        for time in stride(from: 0.0, to: 10.0, by: 0.1) {
-                            let x = CGFloat(time / 10.0) * width
-                            let y = CGFloat(1.0 - retention(at: time) / S) * height
-                            path.addLine(to: CGPoint(x: x, y: y))
+                            VStack {
+                                Spacer()
+                                Text("시간 (t)")
+                            }
+                            .padding(.bottom, 10)
                         }
                     }
-                    .stroke(Color.blue, lineWidth: 2)
+                    Spacer()
                 }
             }
             .frame(height: 300)
             .padding()
-            
-            // 복습 주기 표시 및 설정
-            Text("복습 시간: \(reviewTimes.map { String(format: "%.1f", $0) }.joined(separator: ", ")) 시간 후")
-                .font(.subheadline)
-                .padding()
-            
-            // 슬라이더를 통해 복습 주기 설정
-            VStack {
-                ForEach(0..<reviewTimes.count, id: \.self) { index in
-                    HStack {
-                        Text("복습 \(index + 1) 시간: \(String(format: "%.1f", reviewTimes[index]))시간")
-                        Slider(value: Binding(
-                            get: { self.reviewTimes[index] },
-                            set: { newValue in
-                                withAnimation(.easeInOut) {
-                                    self.reviewTimes[index] = newValue
-                                }
-                            }
-                        ), in: 0...10, step: 0.1)
-                        .padding()
-                    }
-                }
-            }
-            .padding()
+//            // 슬라이더를 통해 복습 주기 설정
+//            VStack {
+//                ForEach(0..<reviewTimes.count, id: \.self) { index in
+//                    HStack {
+//                        Text("복습 \(index + 1) 시간: \(String(format: "%.1f", reviewTimes[index]))시간")
+//                        Slider(value: Binding(
+//                            get: { self.reviewTimes[index] },
+//                            set: { newValue in
+//                                withAnimation(.easeInOut) {
+//                                    self.reviewTimes[index] = newValue
+//                                }
+//                            }
+//                        ), in: 0...10, step: 0.1)
+//                        .padding()
+//                    }
+//                }
+//            }
+//            .padding()
         }
     }
 }
