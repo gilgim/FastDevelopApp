@@ -25,14 +25,12 @@ class RememberThisAddViewModel {
     func sortDate() {
         rememberRepeatDates.sort()
     }
-    
     func addDate() {
         if let lastDate = rememberRepeatDates.last {
             let nextDate = Calendar.current.date(byAdding: .day, value: 1, to: lastDate)!
             rememberRepeatDates.append(nextDate)
         }
     }
-    
     @MainActor
     func createRemember() async {
         //  스위프트 데이터에 추가

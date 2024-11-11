@@ -9,125 +9,19 @@ import SwiftUI
 
 struct RememberThisAddView: View {
     @Environment(\.dismiss) var dismiss
-    @State var selectDateIndex: Int?
+    @State private var selectDateIndex: Int?
+    @State private var lineMaxCount = 2
+    @State private var scrollOffset: CGFloat = 0
+    @State private var isAtEnd = false
+    
     @State var vm = RememberThisAddViewModel()
     var body: some View {
         @Bindable var bindingVm = vm
-        VStack(alignment: .leading, spacing: 0) {
-            Group {
-                HStack {
-                    Text("기억 주기")
-                        .font(.pretendard(size: 14, weight: .regular))
-                        .foregroundStyle(Color(hex:"666666"))
-                    Spacer()
-                    Text("캘린더에 추가")
-                        .font(.pretendard(size: 14, weight: .regular))
-                        .foregroundStyle(Color(hex: self.vm.isAddAccessCalendar ? "28A745" : "999999"))
-                        .onTapGesture {
-                            withAnimation {
-                                self.vm.isAddAccessCalendar.toggle()
-                            }
-                        }
-                    Text("미리알림에 추가")
-                        .font(.pretendard(size: 14, weight: .regular))
-                        .foregroundStyle(Color(hex: self.vm.isAddAccessReminder ? "28A745" : "999999"))
-                        .onTapGesture {
-                            withAnimation {
-                                self.vm.isAddAccessReminder.toggle()
-                            }
-                        }
-                        .padding(.trailing, 16)
-                }
-                .padding(.top, 16)
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: 16) {
-                        ForEach(1..<vm.rememberRepeatDates.count, id: \.self) { index in
-                            let dateText = vm.rememberRepeatCycle( targetIndex: index)
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 8)
-                                    .foregroundStyle(Color(hex:"DDDDDD"))
-                                RoundedRectangle(cornerRadius: 6)
-                                    .foregroundStyle(.white)
-                                    .padding(2)
-                                Text(dateText + "뒤")
-                                    .font(.pretendard(size: 16, weight: .bold))
-                                    .foregroundStyle(Color(hex:"333333"))
-                                    .padding(.horizontal, 12)
-                            }
-                            .frame(height: 44)
-                            .onTapGesture {
-                                self.selectDateIndex = index
-                            }
-                        }
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 8)
-                                .foregroundStyle(Color(hex:"007AFF"))
-                            RoundedRectangle(cornerRadius: 7)
-                                .padding(1)
-                                .foregroundStyle(.white)
-                            Image(systemName: "plus")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 14, height: 14)
-                                .foregroundStyle(Color(hex:"007AFF"))
-                                .fontWeight(.bold)
-                        }
-                        .frame(width: 80, height: 44)
-                        .onTapGesture {
-                            vm.addDate()
-                        }
-                        Spacer()
-                    }
-                }
-                .frame(height: 60)
-            }
-            .padding(.leading, 16)
-            //  기억 제목
-            Group {
-                Text("기억 제목")
-                    .font(.pretendard(size: 14, weight: .regular))
-                    .foregroundStyle(Color(hex:"666666"))
-                    .padding(.top, 16)
-                ZStack {
-                    RoundedRectangle(cornerRadius: 8)
-                        .stroke(lineWidth: 1)
-                        .foregroundStyle(Color(hex:"DDDDDD"))
-                    TextField("기억할 이름을 입력하세요.", text: $bindingVm.rememberThisName)
-                        .padding(.horizontal, 16)
-                        .font(.pretendard(size: 16, weight: .regular))
-                        .foregroundStyle(Color(hex:"333333"))
-                }
-                .frame(width: .deviceWidth - 32, height: 50)
-                .padding(.top, 8)
-            }
-            .padding(.leading, 16)
-            //  날짜 선택
-            Group {
-                Text("기억 설명")
-                    .font(.pretendard(size: 14, weight: .regular))
-                    .foregroundStyle(Color(hex:"666666"))
-                    .padding(.top, 16)
-                ZStack(alignment: .topLeading) {
-                    RoundedRectangle(cornerRadius: 8)
-                        .stroke(lineWidth: 1)
-                        .foregroundStyle(Color(hex:"DDDDDD"))
-                    TextEditor(text: $bindingVm.rememberThisDescription)
-                        .font(.pretendard(size: 16, weight: .regular))
-                        .foregroundStyle(Color(hex:"333333"))
-                        .padding(12)
-                    if vm.rememberThisDescription.isEmpty {
-                        Text("기억에 대한 설명을 입력하세요.")
-                            .font(.pretendard(size: 16, weight: .regular))
-                            .foregroundStyle(Color(hex:"CCCCCC"))
-                            .padding(12)
-                            .padding(.leading, 5)
-                            .padding(.top, 8)
-                    }
-                }
-                .frame(width: .deviceWidth - 32, height: 100)
-                .padding(.top, 8)
-            }
-            .padding(.leading, 16)
+        ScrollView {
+            rememberIntervalGraph
+            rememberIntervalVerticalLine
+            rememberName
+            rememberExplain
         }
         .toolbar {
             Button("Ok") {
@@ -150,13 +44,150 @@ struct RememberThisAddView: View {
                 .datePickerStyle(.graphical)
             }
         }
-
+    }
+    var rememberIntervalGraph: some View {
+        VStack {
+            HStack {
+                Text("기억 주기")
+                    .font(.pretendard(size: 14, weight: .regular))
+                    .foregroundStyle(Color(hex:"666666"))
+                Spacer()
+                Text("캘린더에 추가")
+                    .font(.pretendard(size: 14, weight: .regular))
+                    .foregroundStyle(Color(hex: self.vm.isAddAccessCalendar ? "28A745" : "999999"))
+                    .onTapGesture {
+                        withAnimation {
+                            self.vm.isAddAccessCalendar.toggle()
+                        }
+                    }
+                Text("미리알림에 추가")
+                    .font(.pretendard(size: 14, weight: .regular))
+                    .foregroundStyle(Color(hex: self.vm.isAddAccessReminder ? "28A745" : "999999"))
+                    .onTapGesture {
+                        withAnimation {
+                            self.vm.isAddAccessReminder.toggle()
+                        }
+                    }
+                    .padding(.trailing, 16)
+            }
+            .padding(.top, 16)
+        }
+        .padding(.leading, 16)
+    }
+    var rememberIntervalVerticalLine: some View {
+        GeometryReader { outerGeometry in
+            ScrollView(.horizontal, showsIndicators: false) {
+                ZStack {
+                    HStack(spacing: 0) {
+                        ForEach(0..<lineMaxCount, id: \.self) { i in
+                            ZStack(alignment: .top) {
+                                Rectangle()
+                                    .foregroundStyle(.white)
+                                Rectangle()
+                                    .foregroundColor(.gray)
+                                    .frame(width: UIScreen.main.bounds.width, height: 1)
+                                    .padding(.top, 3.5)
+                            }
+                            .onTapGesture {
+                                self.vm.addDate()
+                            }
+                        }
+                    }
+                    HStack {
+                        ForEach(vm.rememberRepeatDates, id: \.self) { date in
+                            VStack(spacing: 8) {
+                                Circle()
+                                    .frame(width: 8, height: 8)
+                                    .foregroundColor(.gray)
+                                Text(date.formmatToString("yyyy년 MM월 dd일"))
+                                    .foregroundColor(.gray)
+                                    .minimumScaleFactor(0.5)
+                            }
+                        }
+                        Spacer()
+                    }
+                }
+                .background(
+                    GeometryReader { innerGeometry in
+                        Color.clear
+                            .onChange(of: innerGeometry.frame(in: .global).minX) { _,  newValue in
+                                let offset = newValue - outerGeometry.frame(in: .global).minX
+                                scrollOffset = -offset
+                                
+                                let maxOffset = innerGeometry.size.width - outerGeometry.size.width
+                                
+                                if scrollOffset >= maxOffset {
+                                    if !isAtEnd {
+                                        isAtEnd = true
+                                        lineMaxCount += 1
+                                    }
+                                } else {
+                                    isAtEnd = false
+                                }
+                            }
+                    }
+                )
+                .padding(.leading, 16)
+            }
+        }
+        .frame(height: 20)
+    }
+    var rememberName: some View {
+        @Bindable var bindingVm = vm
+        return VStack(alignment: .leading, spacing: 0) {
+            Text("기억 제목")
+                .font(.pretendard(size: 14, weight: .regular))
+                .foregroundStyle(Color(hex:"666666"))
+                .padding(.top, 16)
+            ZStack {
+                RoundedRectangle(cornerRadius: 8)
+                    .stroke(lineWidth: 1)
+                    .foregroundStyle(Color(hex:"DDDDDD"))
+                TextField("기억할 이름을 입력하세요.", text: $bindingVm.rememberThisName)
+                    .padding(.horizontal, 16)
+                    .font(.pretendard(size: 16, weight: .regular))
+                    .foregroundStyle(Color(hex:"333333"))
+            }
+            .frame(width: .deviceWidth - 32, height: 50)
+            .padding(.top, 8)
+        }
+        .padding(.leading, 16)
+    }
+    var rememberExplain: some View {
+        @Bindable var bindingVm = vm
+        return VStack(alignment: .leading, spacing: 0) {
+            Text("기억 설명")
+                .font(.pretendard(size: 14, weight: .regular))
+                .foregroundStyle(Color(hex:"666666"))
+                .padding(.top, 16)
+            ZStack(alignment: .topLeading) {
+                RoundedRectangle(cornerRadius: 8)
+                    .stroke(lineWidth: 1)
+                    .foregroundStyle(Color(hex:"DDDDDD"))
+                TextEditor(text: $bindingVm.rememberThisDescription)
+                    .font(.pretendard(size: 16, weight: .regular))
+                    .foregroundStyle(Color(hex:"333333"))
+                    .padding(12)
+                if vm.rememberThisDescription.isEmpty {
+                    Text("기억에 대한 설명을 입력하세요.")
+                        .font(.pretendard(size: 16, weight: .regular))
+                        .foregroundStyle(Color(hex:"CCCCCC"))
+                        .padding(12)
+                        .padding(.leading, 5)
+                        .padding(.top, 8)
+                }
+            }
+            .frame(width: .deviceWidth - 32, height: 100)
+            .padding(.top, 8)
+        }
+        .padding(.leading, 16)
     }
 }
 
 #Preview {
     RememberThisAddView()
-//    RememberRepeatSettingView()
+//    ForgettingCurveView()
+//    CustomGraphView()
 }
 struct RememberRepeatSettingView: View {
     var body: some View {
@@ -169,94 +200,118 @@ struct RememberRepeatSettingView: View {
         }
     }
 }
-struct ForgettingCurveWithReviewView: View {
-    // 초기 기억값과 망각 속도 상수
-    let S: Double = 100
-    let decayConstant: Double = 1.0
+import SwiftUI
+
+struct ForgettingCurveView: View {
+    let k: Double = 0.3 // 망각 계수
+    let studyTimes: [Double] = [0, 5, 10, 15] // 첫 학습 및 복습 시점 (단위: 시간)
+    let totalTime: Double = 20 // 총 경과 시간
+    let maxRetention: Double = 1.5 // 화면에 맞추기 위한 최대 기억 유지율 (누적 값을 고려)
     
-    // 복습 주기 리스트를 상태 변수로 정의
-    @State private var reviewTimes: [Double] = [1, 3, 6] // 기본 복습 주기
+    // 개별 기억 유지율을 계산하는 함수
+    func memoryRetention(at time: Double, studyTime: Double) -> Double {
+        return exp(-k * (time - studyTime))
+    }
     
-    // 기억 보유량 계산 함수
-    func retention(at time: Double) -> Double {
-        // 마지막 복습 시점 찾아서 그 시점에서의 망각 곡선 계산
-        var retentionValue: Double = S
-        var lastReviewTime: Double = 0
-        
-        for reviewTime in reviewTimes {
-            if time >= reviewTime {
-                lastReviewTime = reviewTime
-                retentionValue = S // 복습 시점마다 기억이 회복된다고 가정
-            }
+    // 누적 기억 유지율을 계산하는 함수
+    func totalRetention(at time: Double) -> Double {
+        studyTimes.reduce(0) { total, studyTime in
+            total + memoryRetention(at: time, studyTime: studyTime)
         }
-        
-        // 마지막 복습 이후 시간에 따른 망각 계산
-        let timeSinceLastReview = time - lastReviewTime
-        return retentionValue * exp(-timeSinceLastReview / decayConstant)
     }
     
     var body: some View {
         VStack {
-            Text("에빙하우스 망각 곡선 (복습 포함)")
+            Text("누적 기억 유지율 그래프")
                 .font(.headline)
                 .padding()
-            
-            // 그래프 영역
+
             GeometryReader { geometry in
-                HStack {
-                    VStack(alignment:.leading) {
-                        Spacer()
-                        Text("기\n억\n 보\n유\n량 (%)")
+                Path { path in
+                    let width = geometry.size.width
+                    let height = geometry.size.height
+                    
+                    path.move(to: CGPoint(x: 0, y: height))
+                    
+                    for t in stride(from: 0, through: totalTime, by: 0.1) {
+                        let x = CGFloat(t / totalTime) * width
+                        let y = CGFloat(1.0 - min(totalRetention(at: t), maxRetention) / maxRetention) * height
+                        path.addLine(to: CGPoint(x: x, y: y))
                     }
-                    .frame(width: 30)
-                    .offset(y: -50)
-                    VStack {
-                        Path { path in
-                            let width = geometry.size.width
-                            let height = geometry.size.height
-                            
-                            path.move(to: CGPoint(x: 0, y: height))
-                            
-                            // 시간을 0에서 10까지 진행하면서 각 시간에 대한 기억 보유량을 계산하고 라인을 그림
-                            for time in stride(from: 0.0, to: 10.0, by: 0.1) {
-                                let x = CGFloat(time / 10.0) * width
-                                let y = CGFloat(1.0 - retention(at: time) / S) * height
-                                path.addLine(to: CGPoint(x: x, y: y))
-                            }
-                        }
-                        .stroke(Color.blue, lineWidth: 1)
-                        HStack {
-                            Spacer()
-                            VStack {
-                                Spacer()
-                                Text("시간 (t)")
-                            }
-                            .padding(.bottom, 10)
-                        }
+                }
+                .stroke(Color.blue, lineWidth: 2)
+                
+                // 복습 시점을 표시하는 축 라인
+                ForEach(studyTimes, id: \.self) { studyTime in
+                    let x = CGFloat(studyTime / totalTime) * geometry.size.width
+                    Path { path in
+                        path.move(to: CGPoint(x: x, y: 0))
+                        path.addLine(to: CGPoint(x: x, y: geometry.size.height))
                     }
-                    Spacer()
+                    .stroke(Color.red.opacity(0.5), style: StrokeStyle(lineWidth: 1, dash: [5]))
                 }
             }
             .frame(height: 300)
             .padding()
-//            // 슬라이더를 통해 복습 주기 설정
-//            VStack {
-//                ForEach(0..<reviewTimes.count, id: \.self) { index in
-//                    HStack {
-//                        Text("복습 \(index + 1) 시간: \(String(format: "%.1f", reviewTimes[index]))시간")
-//                        Slider(value: Binding(
-//                            get: { self.reviewTimes[index] },
-//                            set: { newValue in
-//                                withAnimation(.easeInOut) {
-//                                    self.reviewTimes[index] = newValue
-//                                }
-//                            }
-//                        ), in: 0...10, step: 0.1)
-//                        .padding()
-//                    }
-//                }
-//            }
-//            .padding()
+            
+            // 복습 시점을 표시
+            VStack {
+                Text("복습 시점: \(studyTimes.map { String(format: "%.1f", $0) }.joined(separator: ", ")) 시간")
+                    .font(.subheadline)
+                    .padding()
+            }
+        }
+    }
+}
+
+struct GraphView: View {
+    // 수식에 따라 y 값을 계산하는 함수
+    func calculateY(x: Double) -> Double {
+        return x * x // 예제: y = x^2
+    }
+
+    var body: some View {
+        GeometryReader { geometry in
+            Path { path in
+                let width = geometry.size.width
+                let height = geometry.size.height
+                let step = width / 365 // 그래프의 x 값 증가 간격
+
+                path.move(to: CGPoint(x: 0, y: height))
+
+                for i in stride(from: 0, to: 365, by: 1) {
+                    let x = Double(i) * step
+                    let y = calculateY(x: x / width) * height
+                    path.addLine(to: CGPoint(x: x, y: height - y))
+                }
+            }
+            .stroke(Color.blue, lineWidth: 2) // 그래프 선 색상 및 두께 설정
+        }
+        .padding()
+    }
+}
+import Foundation
+
+struct CustomGraphView: View {
+    func calculate(t: Double, r0: Double, n: Double, alpha0: Double, gamma: Double, beta: Double) -> Double {
+        return exp(-(alpha0 * gamma/pow(n, beta))*t)
+    }
+    var body: some View {
+        GeometryReader { geometry in
+            Path { path in
+                let width = geometry.size.width
+                let height = geometry.size.height
+                let step = width / 100000 // 그래프의 x 값 증가 간격
+
+                path.move(to: CGPoint(x: 0, y: height))
+
+                for i in stride(from: 0, to: 100000, by: 1) {
+                    let x = Double(i) * step
+                    let y = calculate(t: x / width, r0: 1, n: 1, alpha0: 0.3, gamma: 1.0, beta: 0.9) * height
+                    path.addLine(to: CGPoint(x: x, y: height - y))
+                }
+            }
+            .stroke(Color.blue, lineWidth: 2) // 그래프 선 색상 및 두께 설정
         }
     }
 }
