@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		168DA0F92CE5DD4A00B56DC3 /* GlobalPositionModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 168DA0F82CE5DD3E00B56DC3 /* GlobalPositionModifier.swift */; };
+		168DA0FB2CE5E48F00B56DC3 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 168DA0FA2CE5E48A00B56DC3 /* Utils.swift */; };
+		168DA1252CE70EF800B56DC3 /* UIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 168DA1242CE70EEA00B56DC3 /* UIViewControllerExtension.swift */; };
 		1695AD862CB8F74E00D9B6F9 /* RememberScheduleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1695AD742CB8F74E00D9B6F9 /* RememberScheduleModel.swift */; };
 		1695AD872CB8F74E00D9B6F9 /* RememberThisAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1695AD7A2CB8F74E00D9B6F9 /* RememberThisAddView.swift */; };
 		1695AD882CB8F74E00D9B6F9 /* RememberThisListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1695AD7B2CB8F74E00D9B6F9 /* RememberThisListView.swift */; };
@@ -32,6 +35,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		168DA0F82CE5DD3E00B56DC3 /* GlobalPositionModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalPositionModifier.swift; sourceTree = "<group>"; };
+		168DA0FA2CE5E48A00B56DC3 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		168DA1242CE70EEA00B56DC3 /* UIViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtension.swift; sourceTree = "<group>"; };
 		1692EB282CB7502E0050394C /* RememberThis.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RememberThis.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1695AD742CB8F74E00D9B6F9 /* RememberScheduleModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RememberScheduleModel.swift; sourceTree = "<group>"; };
 		1695AD762CB8F74E00D9B6F9 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -77,6 +83,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		160AF4E52CE2DFEE0077C1E8 /* Modifier */ = {
+			isa = PBXGroup;
+			children = (
+				168DA0F82CE5DD3E00B56DC3 /* GlobalPositionModifier.swift */,
+			);
+			path = Modifier;
+			sourceTree = "<group>";
+		};
 		1692EB1F2CB7502E0050394C = {
 			isa = PBXGroup;
 			children = (
@@ -113,6 +127,7 @@
 		1695AD792CB8F74E00D9B6F9 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				168DA0FA2CE5E48A00B56DC3 /* Utils.swift */,
 				B004F3742CBB7E6200713CE4 /* RepeatTextsKorean.swift */,
 				B004F3032CBA7EC600713CE4 /* Font */,
 				1695AD772CB8F74E00D9B6F9 /* Preview Content */,
@@ -149,6 +164,7 @@
 				1695AD822CB8F74E00D9B6F9 /* Info.plist */,
 				1695AD912CB8F88C00D9B6F9 /* Configuration */,
 				1695AD792CB8F74E00D9B6F9 /* Resource */,
+				160AF4E52CE2DFEE0077C1E8 /* Modifier */,
 				1695AD942CB8F9F900D9B6F9 /* Extensions */,
 				1695AD7D2CB8F74E00D9B6F9 /* View */,
 				1695AD812CB8F74E00D9B6F9 /* ViewModel */,
@@ -177,6 +193,7 @@
 		1695AD942CB8F9F900D9B6F9 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				168DA1242CE70EEA00B56DC3 /* UIViewControllerExtension.swift */,
 				1695ADB32CBCF72400D9B6F9 /* DateExtension.swift */,
 				1695AD952CB8FEC600D9B6F9 /* ColorExtension.swift */,
 				B004F2F72CBA7EBC00713CE4 /* CGFloatExtension.swift */,
@@ -272,6 +289,7 @@
 				1695AD862CB8F74E00D9B6F9 /* RememberScheduleModel.swift in Sources */,
 				1695AD872CB8F74E00D9B6F9 /* RememberThisAddView.swift in Sources */,
 				16E389E52CBE34F5003C0DD5 /* RememberThisAlertView.swift in Sources */,
+				168DA1252CE70EF800B56DC3 /* UIViewControllerExtension.swift in Sources */,
 				B004F3112CBA7FCF00713CE4 /* RememberThisMaskView.swift in Sources */,
 				1695ADB22CBCF39900D9B6F9 /* RememberScheduleDetailModel.swift in Sources */,
 				1695AD882CB8F74E00D9B6F9 /* RememberThisListView.swift in Sources */,
@@ -282,7 +300,9 @@
 				B004F2F42CBA7EA700713CE4 /* FontExtensions.swift in Sources */,
 				1695AD8C2CB8F74E00D9B6F9 /* RememberThisSplashViewModel.swift in Sources */,
 				1695AD932CB8F8A800D9B6F9 /* RememberThisSwiftDataConfiguration.swift in Sources */,
+				168DA0FB2CE5E48F00B56DC3 /* Utils.swift in Sources */,
 				1695AD8D2CB8F74E00D9B6F9 /* RememberThisApp.swift in Sources */,
+				168DA0F92CE5DD4A00B56DC3 /* GlobalPositionModifier.swift in Sources */,
 				B004F2F62CBA7EB400713CE4 /* ViewExtensions.swift in Sources */,
 				1695AD962CB8FEDA00D9B6F9 /* ColorExtension.swift in Sources */,
 			);

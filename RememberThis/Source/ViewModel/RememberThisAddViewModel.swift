@@ -12,9 +12,53 @@ import UserNotifications
 class RememberThisAddViewModel {
     var rememberThisName: String = ""
     var rememberThisDescription: String = ""
-    var rememberRepeatDates: [Date] = [Date()]
-    var isAddAccessCalendar: Bool = false
-    var isAddAccessReminder: Bool = false
+    var rememberRepeatDates: [Date] {
+        get {
+            return _rememberRepeatDates
+        }
+        set {
+            let differences = zip(_rememberRepeatDates, newValue).enumerated().compactMap { index, pair -> (index: Int, old: Date, new: Date)? in
+                if pair.0 != pair.1 {
+                    return (index: index, old: pair.0, new: pair.1)
+                }
+                return nil
+            }
+            
+            if !differences.isEmpty {
+                for difference in differences {
+                    print("변경된 인덱스: \(difference.index), 이전 값: \(difference.old), 새 값: \(difference.new)")
+                    
+                    // 0번째 인덱스가 변경되었을 경우
+                    if difference.index == 0 {
+                        let newFirstDate = difference.new
+                        
+                        // 기존 간격 계산
+                        var intervals: [Int] = []
+                        for i in 1..<_rememberRepeatDates.count {
+                            let interval = Calendar.current.dateComponents([.day], from: _rememberRepeatDates[i - 1], to: _rememberRepeatDates[i]).day ?? 0
+                            intervals.append(interval)
+                        }
+                        
+                        // 새 간격 적용
+                        _rememberRepeatDates[0] = newFirstDate
+                        for i in 1..<_rememberRepeatDates.count {
+                            if let adjustedDate = Calendar.current.date(byAdding: .day, value: intervals[i - 1], to: _rememberRepeatDates[i - 1]) {
+                                _rememberRepeatDates[i] = adjustedDate
+                            }
+                        }
+                        
+                        print("간격 유지 후 새로운 날짜 배열: \(_rememberRepeatDates)")
+                    }
+                }
+            }
+            
+            // 값 업데이트
+            _rememberRepeatDates = newValue
+        }
+    }
+    var _rememberRepeatDates: [Date] = [Date()]
+    var isCalendarAccessEnabled: Bool = false
+    var isReminderAccessEnabled: Bool = false
     
     func dateFormatterString(date: Date) -> String {
         let formatter = DateFormatter()
@@ -39,12 +83,12 @@ class RememberThisAddViewModel {
             let rememberDateID = UUID()
             let rememberDateModel = RememberScheduleDetailModel(id: rememberDateID, date: date)
             self.addNotification(id: rememberDateID, date: date)
-            if isAddAccessCalendar {
+            if isCalendarAccessEnabled {
                 if let event = try? await addCalendar(date: date) {
                     rememberDateModel.calendarID = event.calendarItemIdentifier
                 }
             }
-            if isAddAccessReminder {
+            if isReminderAccessEnabled {
                 if let event = try? await addReminder(date: date) {
                     rememberDateModel.reminderID = event.calendarItemIdentifier
                 }
@@ -163,5 +207,34 @@ class RememberThisAddViewModel {
         }
         
         return result.isEmpty ? "0분" : result.trimmingCharacters(in: .whitespaces)
+    }
+    func dateRange(for index: Int) -> ClosedRange<Date>? {
+        guard rememberRepeatDates.indices.contains(index) else { return nil }
+        
+        let previousDate = index > 0 ? rememberRepeatDates[index - 1] : nil
+        let nextDate = index < rememberRepeatDates.count - 1 ? rememberRepeatDates[index + 1] : nil
+        
+        if let previousDate = previousDate, let nextDate = nextDate {
+            return previousDate...nextDate
+        } else if let previousDate = previousDate {
+            return previousDate...Date.distantFuture
+        } else if let nextDate = nextDate {
+            return Date.distantPast...nextDate
+        }
+        return nil
+    }
+    func updateDates(afterChangingFirstDateTo newDate: Date) {
+        guard !rememberRepeatDates.isEmpty else { return }
+        
+        // 첫 번째 날짜 업데이트
+        rememberRepeatDates[0] = newDate
+        
+        // 기존 날짜 간격 유지
+        for i in 1..<rememberRepeatDates.count {
+            let interval = Calendar.current.dateComponents([.day], from: rememberRepeatDates[i - 1], to: rememberRepeatDates[i])
+            if let days = interval.day {
+                rememberRepeatDates[i] = Calendar.current.date(byAdding: .day, value: days, to: rememberRepeatDates[i - 1])!
+            }
+        }
     }
 }
