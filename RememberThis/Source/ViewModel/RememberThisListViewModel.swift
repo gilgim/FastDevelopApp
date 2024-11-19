@@ -57,6 +57,7 @@ class RememberThisListViewModel {
                     completeCount += 1
                 }
                 let koreanScheduleText = (repetitionDictionary["repeat\(index+1)"] ?? "") + " 암기"
+                
                 //  완료: 미리완료, 늦게완료, 완벽완료
                 var dateComponent = RememberThisComponent.RememberThisDateComponent(imageName: "", date: rememberDate.date.formmatToString("yyyy.MM.dd"), koreanScheduleText: koreanScheduleText, status: .incomplete, originModel: rememberDate, color: .clear, strikeThrough: false)
                 if let completeDate = rememberDate.completeDate {

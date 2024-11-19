@@ -5,8 +5,29 @@
 //  Created by gilgim on 9/29/24.
 //
 import SwiftUI
-
+import Combine
 extension View {
+    func keyboardStatePublisher() -> AnyPublisher<Bool, Never> {
+        let willShow = NotificationCenter.default.publisher(for: UIResponder.keyboardWillShowNotification)
+            .map { _ in true }
+        
+        let willHide = NotificationCenter.default.publisher(for: UIResponder.keyboardWillHideNotification)
+            .map { _ in false }
+        
+        return Publishers.Merge(willShow, willHide)
+            .removeDuplicates()
+            .eraseToAnyPublisher()
+    }
+    
+    /// 키보드 상태를 확인하여 바인딩에 연결
+    func observeKeyboardState(isKeyboardVisible: Binding<Bool>) -> some View {
+        self.onReceive(keyboardStatePublisher()) { isVisible in
+            isKeyboardVisible.wrappedValue = isVisible
+        }
+    }
+    func hideKeyboard() {
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+    }
     var topSafeArea: CGFloat {
         UIApplication.shared.connectedScenes
             .compactMap { $0 as? UIWindowScene }
@@ -27,7 +48,7 @@ extension View {
         hostingView.view.backgroundColor = .clear
         return hostingView
     }
-
+    
     var uiView: UIView {
         return hostingController.view
     }

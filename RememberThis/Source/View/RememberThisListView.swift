@@ -69,7 +69,9 @@ struct RememberThisListView: View {
                                 .strikethrough(dateComponent.strikeThrough, color: dateComponent.color)
                                 .padding(.bottom, 13)
                                 .onTapGesture {
-                                    vm.remeberThis(dateComponent.originModel)
+                                    withAnimation {
+                                        vm.remeberThis(dateComponent.originModel)
+                                    }
                                 }
                             }
                             Spacer()
@@ -86,9 +88,8 @@ struct RememberThisListView: View {
                     } bottomSecondClick: { rememberThis, index in
                         
                     }
-                    .background(Color.etherealBlue)
                 } else {
-                    Text("Empty View")
+                    Text("아직 기억 컨텐츠가 없습니다.\n+버튼을 눌러 생성해주세요.")
                 }
             }
             .alert("삭제", isPresented: $isDeletePresented, actions: {
