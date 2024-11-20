@@ -131,36 +131,44 @@ struct RememberThisListView: View {
                                 ZStack {
                                     RoundedRectangle(cornerRadius: 12)
                                         .foregroundStyle(Color.black58)
-                                    HStack(spacing: 48) {
-                                        Button {
-                                            
-                                        } label: {
-                                            VStack {
-                                                Image(systemName: "arrow.counterclockwise")
-                                                    .resizable()
-                                                    .scaledToFit()
-                                                    .frame(width: 36, height: 36)
-                                                Text("다시하기")
-                                                    .font(.tenada(size: 14))
-                                                    .padding(.top, 2)
+                                    VStack {
+                                        Text("실패 목록")
+                                            .font(.tenada(size: 18))
+                                            .foregroundStyle(.white)
+                                            .padding(.top, 48)
+                                        Spacer()
+                                        HStack(spacing: 48) {
+                                            Button {
+                                                
+                                            } label: {
+                                                VStack {
+                                                    Image(systemName: "arrow.counterclockwise")
+                                                        .resizable()
+                                                        .scaledToFit()
+                                                        .frame(width: 36, height: 36)
+                                                    Text("다시하기")
+                                                        .font(.tenada(size: 14))
+                                                        .padding(.top, 2)
+                                                }
+                                                .foregroundStyle(Color.white)
                                             }
-                                            .foregroundStyle(Color.white)
-                                        }
-                                        Button {
-                                            
-                                        } label: {
-                                            VStack {
-                                                Image(systemName: "xmark")
-                                                    .resizable()
-                                                    .scaledToFit()
-                                                    .frame(width: 28, height: 28)
-                                                    .frame(width: 36, height: 36)
-                                                Text("포기하기")
-                                                    .font(.tenada(size: 14))
-                                                    .padding(.top, 2)
+                                            Button {
+                                                
+                                            } label: {
+                                                VStack {
+                                                    Image(systemName: "xmark")
+                                                        .resizable()
+                                                        .scaledToFit()
+                                                        .frame(width: 28, height: 28)
+                                                        .frame(width: 36, height: 36)
+                                                    Text("포기하기")
+                                                        .font(.tenada(size: 14))
+                                                        .padding(.top, 2)
+                                                }
+                                                .foregroundStyle(Color.white)
                                             }
-                                            .foregroundStyle(Color.white)
                                         }
+                                        .padding(.bottom, 34)
                                     }
                                 }
                                 .frame(width: 300, height: 500)
