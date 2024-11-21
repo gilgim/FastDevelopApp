@@ -91,7 +91,9 @@ struct RememberThisListView: View {
                                     .padding(.top, 8)
                                 }
 
-                                if let todayRememberDate = content.todayRememberDate {
+                                if let todayRememberDate = content.todayRememberDate, !content.isFail {
+                                    Text("이 챌린지는 오늘 복습예정이 있습니다.")
+                                    Spacer()
                                     TimelineView(.animation) { context in
                                         Button {
                                             
@@ -197,10 +199,7 @@ struct RememberThisListView: View {
             .alert("삭제", isPresented: $isDeletePresented, actions: {
                 Button("취소", role: .cancel) {}
                 Button("삭제", role: .destructive) {
-                    if let selected {
-                        focusIndex = 0
-                        vm.deleteRemember()
-                    }
+                    vm.deleteRemember()
                 }
             })
             .alert("다시하기", isPresented: $isRepeatTry, actions: {

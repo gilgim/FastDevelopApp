@@ -80,7 +80,7 @@ class RememberThisListViewModel {
     func rememberThisAchievementPlanListTexts(_ rememberThis: RememberScheduleModel) -> [String]? {
         var achievementPlanListTexts: [String] = []
         for remeberDate in rememberThis.rememberDates ?? [] {
-            if remeberDate.date > Date() {
+            if remeberDate.date.isAfterDay(Date()) {
                 achievementPlanListTexts.append(remeberDate.date.formmatToString("- yyyy년 MM월 dd일 예정"))
             }
         }
@@ -91,8 +91,9 @@ class RememberThisListViewModel {
         }
     }
     func rememberThisFail(_ rememberThis: RememberScheduleModel) -> Bool {
+        let calendar = Calendar.current
         for remeberDate in rememberThis.rememberDates ?? [] {
-            if remeberDate.date < Date() {
+            if remeberDate.date.isBeforeDay(Date()) {
                 if remeberDate.completeDate == nil {
                     return true
                 }
@@ -102,7 +103,7 @@ class RememberThisListViewModel {
     }
     func rememberThisTodayDate(_ rememberThis: RememberScheduleModel) -> Date? {
         for rememberDate in rememberThis.rememberDates ?? [] {
-            if rememberDate.date == Date() {
+            if rememberDate.date.isSameDay(as: Date()) {
                 return rememberDate.date
             }
         }
@@ -155,6 +156,7 @@ class RememberThisListViewModel {
         }
         RememberThisSwiftDataConfiguration.context.delete(selectRememberThis)  // 데이터 삭제
         try? RememberThisSwiftDataConfiguration.context.save()  // 변경 사항 저장
+        self.loadRememberSchedules()
         self.selectRememberThis = nil
     }
     
