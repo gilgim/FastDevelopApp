@@ -24,6 +24,7 @@
 		1695AD962CB8FEDA00D9B6F9 /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1695AD952CB8FEC600D9B6F9 /* ColorExtension.swift */; };
 		1695ADB22CBCF39900D9B6F9 /* RememberScheduleDetailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1695ADB12CBCF39800D9B6F9 /* RememberScheduleDetailModel.swift */; };
 		1695ADB42CBCF72B00D9B6F9 /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1695ADB32CBCF72400D9B6F9 /* DateExtension.swift */; };
+		169751862CF5492A00A12C28 /* RememberUserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 169751852CF5492400A12C28 /* RememberUserModel.swift */; };
 		16E389E52CBE34F5003C0DD5 /* RememberThisAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16E389E42CBE34EE003C0DD5 /* RememberThisAlertView.swift */; };
 		B004F2A42CBA5D8500713CE4 /* ACarousel in Frameworks */ = {isa = PBXBuildFile; productRef = 1695AD9B2CB9064800D9B6F9 /* ACarousel */; };
 		B004F2F42CBA7EA700713CE4 /* FontExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B004F2F32CBA7EA700713CE4 /* FontExtensions.swift */; };
@@ -54,6 +55,7 @@
 		1695AD952CB8FEC600D9B6F9 /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
 		1695ADB12CBCF39800D9B6F9 /* RememberScheduleDetailModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RememberScheduleDetailModel.swift; sourceTree = "<group>"; };
 		1695ADB32CBCF72400D9B6F9 /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
+		169751852CF5492400A12C28 /* RememberUserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RememberUserModel.swift; sourceTree = "<group>"; };
 		16E389E42CBE34EE003C0DD5 /* RememberThisAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RememberThisAlertView.swift; sourceTree = "<group>"; };
 		B004F2F32CBA7EA700713CE4 /* FontExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontExtensions.swift; sourceTree = "<group>"; };
 		B004F2F52CBA7EB400713CE4 /* ViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtensions.swift; sourceTree = "<group>"; };
@@ -110,6 +112,7 @@
 		1695AD752CB8F74E00D9B6F9 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				169751852CF5492400A12C28 /* RememberUserModel.swift */,
 				1695AD742CB8F74E00D9B6F9 /* RememberScheduleModel.swift */,
 				1695ADB12CBCF39800D9B6F9 /* RememberScheduleDetailModel.swift */,
 			);
@@ -285,6 +288,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B004F2F82CBA7EBC00713CE4 /* CGFloatExtension.swift in Sources */,
+				169751862CF5492A00A12C28 /* RememberUserModel.swift in Sources */,
 				1695ADB42CBCF72B00D9B6F9 /* DateExtension.swift in Sources */,
 				1695AD862CB8F74E00D9B6F9 /* RememberScheduleModel.swift in Sources */,
 				1695AD872CB8F74E00D9B6F9 /* RememberThisAddView.swift in Sources */,
@@ -442,11 +446,12 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = RememberThis/Source/Info.plist;
+				INFOPLIST_KEY_NSCalendarsUsageDescription = "이 앱은 캘린더에 일정을 추가하기 위해 권한이 필요합니다.";
+				INFOPLIST_KEY_NSRemindersUsageDescription = "이 앱은 미리알림을 추가하기 위해 권한이 필요합니다.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -472,11 +477,12 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = RememberThis/Source/Info.plist;
+				INFOPLIST_KEY_NSCalendarsUsageDescription = "이 앱은 캘린더에 일정을 추가하기 위해 권한이 필요합니다.";
+				INFOPLIST_KEY_NSRemindersUsageDescription = "이 앱은 미리알림을 추가하기 위해 권한이 필요합니다.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

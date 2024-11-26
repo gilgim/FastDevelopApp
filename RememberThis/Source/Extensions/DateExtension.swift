@@ -36,4 +36,20 @@ extension Date {
         }
         return selfDay > otherDay
     }
+    
+    func differenceInDays(to otherDate: Date) -> Int {
+        let calendar = Calendar.current
+        let startOfSelf = calendar.startOfDay(for: self)
+        let startOfOther = calendar.startOfDay(for: otherDate)
+        
+        guard let daysDifference = calendar.dateComponents([.day], from: startOfSelf, to: startOfOther).day else {
+            return 0
+        }
+        return daysDifference
+    }
+    
+    func addingDays(_ days: Int) -> Date {
+        let calendar = Calendar.current
+        return calendar.date(byAdding: .day, value: days, to: self) ?? self
+    }
 }
