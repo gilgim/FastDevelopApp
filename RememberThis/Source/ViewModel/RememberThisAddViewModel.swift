@@ -100,13 +100,16 @@ class RememberThisAddViewModel {
         rememberRepeatDates.sort()
     }
     func addDate() {
-        let R = 0.75 // 기준 기억률
+        let R = 0.5 // 기준 기억률
         let k0 = 0.7
         let repeatCount = Double(rememberRepeatDates.count)
         let repeatEffect = 1 * 0.75
         let userEffect = 1 * 0.75
-        let k = k0 / (1 + repeatCount + repeatEffect + userEffect)
         
+        // 비선형적 기울기 변화 적용 (로그 스케일)
+        let k = k0 / (1 + log(1 + repeatCount) + repeatEffect + userEffect)
+        
+        // 기억률이 R에 도달하는 시간 계산
         let t = -log(R) / k // t = -ln(R) / k
         let day = max(1, Int(t.rounded())) // 최소 1일 보장
         
@@ -115,7 +118,9 @@ class RememberThisAddViewModel {
             let nextDate = Calendar.current.date(byAdding: .day, value: day, to: lastDate)!
             rememberRepeatDates.append(nextDate)
         } else {
-            print("Error: rememberRepeatDates is empty.")
+            // 비어 있는 경우 현재 날짜부터 시작
+            let nextDate = Calendar.current.date(byAdding: .day, value: day, to: Date())!
+            rememberRepeatDates.append(nextDate)
         }
     }
     func rememberIntervalEquation(n: Double, t: Double) -> Double {
