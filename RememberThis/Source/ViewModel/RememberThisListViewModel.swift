@@ -257,16 +257,20 @@ class RememberThisListViewModel {
         let rememberThisDescription = selectRememberThis.scheduleDescription
         var newDates: [Date] = [Date()]
         var isCalendarAccessEnabled = false
+        
+        var rememberDates = selectRememberThis.rememberDates ?? []
+        rememberDates.sort(by: {$0.date < $1.date})
+        
         var isReminderAccessEnabled = false
-        for rememberDate in selectRememberThis.rememberDates ?? [] {
+        for rememberDate in rememberDates {
             if rememberDate.calendarID != nil {
                 isCalendarAccessEnabled = true
             }
             if rememberDate.reminderID != nil {
                 isReminderAccessEnabled = true
             }
-            if let firstDate = selectRememberThis.rememberDates?[0].date, firstDate != rememberDate.date {
-                let differenceInDay = firstDate.differenceInDays(to: rememberDate.date)
+            if rememberDates[0].date != rememberDate.date {
+                let differenceInDay = rememberDates[0].date.differenceInDays(to: rememberDate.date)
                 newDates.append(Date().addingDays(differenceInDay))
             }
         }
