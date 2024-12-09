@@ -12,7 +12,8 @@ class RememberThisSwiftDataConfiguration {
         do {
             let fullSchema = Schema([
                 RememberScheduleModel.self,
-                RememberScheduleDetailModel.self
+                RememberScheduleDetailModel.self,
+                RememberUserModel.self
             ])
             /**
              아래와 같이 따로 일부 스키마만 경로를 지정해서 사용가능.

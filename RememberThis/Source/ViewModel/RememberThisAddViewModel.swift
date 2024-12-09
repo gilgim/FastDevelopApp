@@ -8,6 +8,7 @@ import Foundation
 import EventKit
 import UserNotifications
 import Combine
+import TensorFlowLite
 
 @Observable
 class RememberThisAddViewModel {
@@ -99,14 +100,24 @@ class RememberThisAddViewModel {
     func sortDate() {
         rememberRepeatDates.sort()
     }
+    @MainActor
     func addDate() {
+        guard let userDatas = RememberThisSwiftDataConfiguration.loadData(RememberUserModel.self),
+              let userData = userDatas.first else { return }
+        
         let R = 0.5 // 기준 기억률
         let k0 = 0.7
         let repeatCount = Double(rememberRepeatDates.count)
         let repeatEffect = 1 * 0.75
-        let userEffect = 1 * 0.75
         
-        // 비선형적 기울기 변화 적용 (로그 스케일)
+        // 사용자 데이터 (5~1 점수 정규화)
+        let memoryLevelNormalized = Double(userData.memoryLevel) / 5.0
+        let ageNormalized = Double(userData.age) / 5.0
+        let ageWeight = self.ageWeight(age: userData.age)
+        let memoryWeight = 1 - ageWeight
+        
+        let userEffect = (memoryWeight * memoryLevelNormalized) + (ageWeight * (1 - ageNormalized))
+        
         let k = k0 / (1 + log(1 + repeatCount) + repeatEffect + userEffect)
         
         // 기억률이 R에 도달하는 시간 계산
@@ -121,6 +132,67 @@ class RememberThisAddViewModel {
             // 비어 있는 경우 현재 날짜부터 시작
             let nextDate = Calendar.current.date(byAdding: .day, value: day, to: Date())!
             rememberRepeatDates.append(nextDate)
+        }
+    }
+    @MainActor
+    func isReviewCompleted() -> Bool {
+        guard let userDatas = RememberThisSwiftDataConfiguration.loadData(RememberUserModel.self),
+              let userData = userDatas.first else { return false }
+        let k0 = 0.7
+        let repeatCount = max(1, Double(rememberRepeatDates.count))
+        let repeatEffect = 1 * 0.75
+
+        let memoryLevelNormalized = Double(userData.memoryLevel) / 5.0
+        let ageNormalized = Double(userData.age) / 5.0
+        let ageWeight = self.ageWeight(age: userData.age)
+        let memoryWeight = 1 - ageWeight
+
+        let userEffect = (memoryWeight * memoryLevelNormalized) + (ageWeight * (1 - ageNormalized))
+        
+        // 보정된 k 값 계산
+        let k = k0 / (1 + log(1 + repeatCount) + repeatEffect + userEffect)
+        
+        // 현재 기억률 계산 및 0.5 수렴 여부 확인
+        return doesConvergeToHalf(k: k)
+    }
+    func doesConvergeToHalf(k: Double, threshold: Double = 1e-6, maxIterations: Int = 1000) -> Bool {
+        var x: Double = 1.0 // 초기 x 값
+        var previousValue: Double = exp(-k * x)
+        var iterationCount = 0 // 반복 횟수 추적
+
+        while iterationCount < maxIterations {
+            x += 1.0 // x를 점차 증가
+            let currentValue = exp(-k * x)
+            
+            // 수렴값이 0.5에 가까운지 확인
+            if abs(currentValue - 0.5) < threshold {
+                return true // 0.5로 수렴
+            }
+            
+            // 변화가 매우 작아지면 반복 종료
+            if abs(currentValue - previousValue) < threshold {
+                break
+            }
+            
+            previousValue = currentValue
+            iterationCount += 1
+        }
+        return false // 0.5로 수렴하지 않음
+    }
+    func ageWeight(age: Int) -> Double {
+        switch age {
+        case 5: // 10대
+            return 0.2
+        case 4: // 20대
+            return 0.3
+        case 3: // 30대
+            return 0.4
+        case 2: // 40대
+            return 0.5
+        case 1: // 50대
+            return 0.6
+        default:
+            return 0.4
         }
     }
     func rememberIntervalEquation(n: Double, t: Double) -> Double {

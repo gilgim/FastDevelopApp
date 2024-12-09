@@ -209,20 +209,27 @@ struct RememberThisAddView: View {
     var rememberIntervalGraph: some View {
         VStack {
             HStack(spacing: 0) {
-                Text("기억 주기")
-                    .font(.pretendard(size: 14, weight: .regular))
-                    .foregroundStyle(Color(hex:"666666"))
-                    .padding(.trailing, 6)
-                Image(systemName: "plus")
-                    .resizable()
-                    .frame(width: 12, height: 12)
-                    .foregroundStyle(Color(hex:"666666"))
-                    .fontWeight(.bold)
-                    .onTapGesture {
-                        withAnimation {
-                            viewModel.addDate()
+                if viewModel.isReviewCompleted() {
+                    Text("더 이상 복습하지않아도 됩니다.")
+                        .font(.pretendard(size: 14, weight: .regular))
+                        .foregroundStyle(Color(hex:"666666"))
+                        .padding(.trailing, 6)
+                } else {
+                    Text("기억 주기")
+                        .font(.pretendard(size: 14, weight: .regular))
+                        .foregroundStyle(Color(hex:"666666"))
+                        .padding(.trailing, 6)
+                    Image(systemName: "plus")
+                        .resizable()
+                        .frame(width: 12, height: 12)
+                        .foregroundStyle(Color(hex:"666666"))
+                        .fontWeight(.bold)
+                        .onTapGesture {
+                            withAnimation {
+                                viewModel.addDate()
+                            }
                         }
-                    }
+                }
                 Text("<날짜 보기>")
                     .font(.pretendard(size: 12, weight: .regular))
                     .foregroundStyle(Color(hex: self.isNameVisible ? "28A745" : "999999"))
