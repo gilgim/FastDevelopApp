@@ -104,9 +104,8 @@ class RememberThisAddViewModel {
     func addDate() {
         guard let userDatas = RememberThisSwiftDataConfiguration.loadData(RememberUserModel.self),
               let userData = userDatas.first else { return }
-        
         let R = 0.5 // 기준 기억률
-        let k0 = 0.7
+        var k0 = 0.7
         let repeatCount = Double(rememberRepeatDates.count)
         let repeatEffect = 1 * 0.75
         
@@ -115,9 +114,14 @@ class RememberThisAddViewModel {
         let ageNormalized = Double(userData.age) / 5.0
         let ageWeight = self.ageWeight(age: userData.age)
         let memoryWeight = 1 - ageWeight
-        
         let userEffect = (memoryWeight * memoryLevelNormalized) + (ageWeight * (1 - ageNormalized))
-        
+        let dataCount = RememberThisSwiftDataConfiguration.loadData(RememberScheduleDetailModel.self)
+        //  한달 치 데이터
+        if dataCount?.count ?? 0 > 31 {
+            let tensorFlowLiteManager = TensorFlowLiteManager()
+            tensorFlowLiteManager.loadModel()
+            k0 = Double(tensorFlowLiteManager.predictKValue(inputData: [Float32(repeatCount), Float32(memoryLevelNormalized), Float32(ageNormalized), Float32(repeatEffect)]) ?? 0)
+        }
         let k = k0 / (1 + log(1 + repeatCount) + repeatEffect + userEffect)
         
         // 기억률이 R에 도달하는 시간 계산

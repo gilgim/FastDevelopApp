@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		16637D792D07CFB8001A86E6 /* model.tflite in Resources */ = {isa = PBXBuildFile; fileRef = 16637D782D07CFB8001A86E6 /* model.tflite */; };
+		16637D7B2D07FB1D001A86E6 /* TensorFlowManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16637D7A2D07FB0E001A86E6 /* TensorFlowManager.swift */; };
+		16637D7D2D07FF00001A86E6 /* DataExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16637D7C2D07FEF4001A86E6 /* DataExtension.swift */; };
+		16637D7F2D080958001A86E6 /* RemeberTensorFlowWeightModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16637D7E2D080949001A86E6 /* RemeberTensorFlowWeightModel.swift */; };
 		168DA0F92CE5DD4A00B56DC3 /* GlobalPositionModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 168DA0F82CE5DD3E00B56DC3 /* GlobalPositionModifier.swift */; };
 		168DA0FB2CE5E48F00B56DC3 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 168DA0FA2CE5E48A00B56DC3 /* Utils.swift */; };
 		168DA1252CE70EF800B56DC3 /* UIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 168DA1242CE70EEA00B56DC3 /* UIViewControllerExtension.swift */; };
@@ -37,6 +41,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		16637D782D07CFB8001A86E6 /* model.tflite */ = {isa = PBXFileReference; lastKnownFileType = file; path = model.tflite; sourceTree = "<group>"; };
+		16637D7A2D07FB0E001A86E6 /* TensorFlowManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TensorFlowManager.swift; sourceTree = "<group>"; };
+		16637D7C2D07FEF4001A86E6 /* DataExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataExtension.swift; sourceTree = "<group>"; };
+		16637D7E2D080949001A86E6 /* RemeberTensorFlowWeightModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemeberTensorFlowWeightModel.swift; sourceTree = "<group>"; };
 		168DA0F82CE5DD3E00B56DC3 /* GlobalPositionModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalPositionModifier.swift; sourceTree = "<group>"; };
 		168DA0FA2CE5E48A00B56DC3 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		168DA1242CE70EEA00B56DC3 /* UIViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtension.swift; sourceTree = "<group>"; };
@@ -122,6 +130,7 @@
 				169751852CF5492400A12C28 /* RememberUserModel.swift */,
 				1695AD742CB8F74E00D9B6F9 /* RememberScheduleModel.swift */,
 				1695ADB12CBCF39800D9B6F9 /* RememberScheduleDetailModel.swift */,
+				16637D7E2D080949001A86E6 /* RemeberTensorFlowWeightModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -137,6 +146,7 @@
 		1695AD792CB8F74E00D9B6F9 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				16637D782D07CFB8001A86E6 /* model.tflite */,
 				168DA0FA2CE5E48A00B56DC3 /* Utils.swift */,
 				B004F3742CBB7E6200713CE4 /* RepeatTextsKorean.swift */,
 				B004F3032CBA7EC600713CE4 /* Font */,
@@ -195,6 +205,7 @@
 		1695AD912CB8F88C00D9B6F9 /* Configuration */ = {
 			isa = PBXGroup;
 			children = (
+				16637D7A2D07FB0E001A86E6 /* TensorFlowManager.swift */,
 				1695AD922CB8F89C00D9B6F9 /* RememberThisSwiftDataConfiguration.swift */,
 			);
 			path = Configuration;
@@ -204,6 +215,7 @@
 			isa = PBXGroup;
 			children = (
 				168DA1242CE70EEA00B56DC3 /* UIViewControllerExtension.swift */,
+				16637D7C2D07FEF4001A86E6 /* DataExtension.swift */,
 				1695ADB32CBCF72400D9B6F9 /* DateExtension.swift */,
 				1695AD952CB8FEC600D9B6F9 /* ColorExtension.swift */,
 				B004F2F72CBA7EBC00713CE4 /* CGFloatExtension.swift */,
@@ -301,6 +313,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1695AD8E2CB8F74E00D9B6F9 /* Preview Assets.xcassets in Resources */,
+				16637D792D07CFB8001A86E6 /* model.tflite in Resources */,
 				1695AD8F2CB8F74E00D9B6F9 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -343,6 +356,7 @@
 				1695AD862CB8F74E00D9B6F9 /* RememberScheduleModel.swift in Sources */,
 				1695AD872CB8F74E00D9B6F9 /* RememberThisAddView.swift in Sources */,
 				16E389E52CBE34F5003C0DD5 /* RememberThisAlertView.swift in Sources */,
+				16637D7F2D080958001A86E6 /* RemeberTensorFlowWeightModel.swift in Sources */,
 				168DA1252CE70EF800B56DC3 /* UIViewControllerExtension.swift in Sources */,
 				B004F3112CBA7FCF00713CE4 /* RememberThisMaskView.swift in Sources */,
 				1695ADB22CBCF39900D9B6F9 /* RememberScheduleDetailModel.swift in Sources */,
@@ -350,10 +364,12 @@
 				1695AD892CB8F74E00D9B6F9 /* RememberThisSplashView.swift in Sources */,
 				1695AD8A2CB8F74E00D9B6F9 /* RememberThisAddViewModel.swift in Sources */,
 				1695AD8B2CB8F74E00D9B6F9 /* RememberThisListViewModel.swift in Sources */,
+				16637D7D2D07FF00001A86E6 /* DataExtension.swift in Sources */,
 				B004F3752CBB7E6200713CE4 /* RepeatTextsKorean.swift in Sources */,
 				B004F2F42CBA7EA700713CE4 /* FontExtensions.swift in Sources */,
 				1695AD8C2CB8F74E00D9B6F9 /* RememberThisSplashViewModel.swift in Sources */,
 				1695AD932CB8F8A800D9B6F9 /* RememberThisSwiftDataConfiguration.swift in Sources */,
+				16637D7B2D07FB1D001A86E6 /* TensorFlowManager.swift in Sources */,
 				168DA0FB2CE5E48F00B56DC3 /* Utils.swift in Sources */,
 				1695AD8D2CB8F74E00D9B6F9 /* RememberThisApp.swift in Sources */,
 				168DA0F92CE5DD4A00B56DC3 /* GlobalPositionModifier.swift in Sources */,

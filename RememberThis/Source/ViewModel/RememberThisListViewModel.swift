@@ -29,10 +29,30 @@ class RememberThisListViewModel {
             if rememberDate.date.isSameDay(as: Date()) {
                 if let recallLevel = rememberDate.recallLevel,
                    let reviewSatisfaction = rememberDate.reviewSatisfaction {
-                    rememberDate.recallLevel = log(recallLevel) / log(5)
-                    rememberDate.reviewSatisfaction = log(reviewSatisfaction) / log(5)
+                    rememberDate.recallLevel = recallLevel
+                    rememberDate.reviewSatisfaction = reviewSatisfaction
                 }
                 break
+            }
+        }
+        Task { @MainActor in
+            let dataList = RememberThisSwiftDataConfiguration.loadData(RememberScheduleDetailModel.self) ?? []
+            //  한달 치 데이터
+            if dataList.count > 31 {
+                let userDatas = RememberThisSwiftDataConfiguration.loadData(RememberUserModel.self) ?? []
+                guard let userData = userDatas.first else {return}
+                let tensorFlowLiteManager = TensorFlowLiteManager()
+                tensorFlowLiteManager.loadModel()
+                
+                for (i, data) in dataList.enumerated() {
+                    let repeatEffect = 1 * 0.75
+                    let memoryLevelNormalized = Double(userData.memoryLevel) / 5.0
+                    let ageNormalized = Double(userData.age) / 5.0
+                    if i > 0 {
+                        let expectedOutput = dataList[i - 1]
+                        tensorFlowLiteManager.train(inputData: [Float32(dataList.count), Float32(memoryLevelNormalized), Float32(ageNormalized), Float32(repeatEffect)], expectedOutput: Float32(expectedOutput.recallLevel ?? 0))
+                    }
+                }
             }
         }
     }
